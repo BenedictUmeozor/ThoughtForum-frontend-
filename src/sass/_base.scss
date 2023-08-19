@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: $font-inter;
+}
+
+a {
+  display: inline-block;
+  color: $text-color;
+  text-decoration: none;
+}
+
+.icon {
+  width: 1.5rem;
+  color: $primary-color;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding-inline: 0.5rem;
+}
+
+body {
+  background-color: $background-color;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.btn {
+  cursor: pointer;
+  border: 1px solid #aaa;
+  padding: 0.4rem 0.7rem;
+  border-radius: 3px;
+  transition: all 0.3s ease-in;
+}
