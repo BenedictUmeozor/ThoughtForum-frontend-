@@ -1,0 +1,130 @@
+.form-auth {
+  .error {
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 3px;
+    border: 1.7px solid crimson;
+    color: crimson;
+    width: 95%;
+    max-width: 700px;
+    margin: 1.5rem auto auto;
+    background-color: rgba(255, 204, 203, 0.5);
+  }
+
+  .auth {
+    background-color: #fff;
+    padding: 1.3rem 1.6rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    width: 95%;
+    max-width: 700px;
+    margin: 1.5rem auto;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.3rem;
+      font-family: $font-poppins;
+    }
+
+    .form-field {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      column-gap: 0.5rem;
+
+      @media (max-width: 768px) {
+        display: block;
+      }
+
+      label {
+        flex: 1;
+        align-self: flex-start;
+
+        @media (max-width: 768px) {
+          display: block;
+          margin-bottom: 0.4rem;
+        }
+
+        span {
+            color: crimson;
+        }
+      }
+
+      input {
+        flex: 3;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        padding: 0.8rem 0.5rem;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+
+        @media (max-width: 768px) {
+          display: block;
+          width: 100%;
+        }
+      }
+
+      select {
+        flex: 3;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        padding: 0.8rem 0.5rem;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+        }
+
+        @media (max-width: 768px) {
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+
+    .form-btn {
+      display: flex;
+      justify-content: flex-end;
+      margin: 1rem 0;
+
+      @media (max-width: 768px) {
+        justify-content: center;
+      }
+
+      button {
+        background: $primary-color;
+        padding: 0.8rem;
+        color: #fff;
+        border-radius: 0.15rem;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+      }
+    }
+
+    .redirect {
+      font-size: 0.85rem;
+
+      a {
+        color: $primary-color;
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        text-align: center;
+      }
+    }
+
+    .form-error {
+      text-align: center;
+      font-size: 0.78rem;
+      color: crimson;
+      margin-bottom: 1rem;
+    }
+  }
+}

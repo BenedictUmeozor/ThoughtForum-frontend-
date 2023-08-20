@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Questions from "../../components/Questions";
-import HotQuestions from "../../components/HotQuestions";
-import TopMembers from "../../components/TopMembers";
+import Questions from "../components/Questions";
+import HotQuestions from "../components/HotQuestions";
+import TopMembers from "../components/TopMembers";
 
 const Home = () => {
   return (

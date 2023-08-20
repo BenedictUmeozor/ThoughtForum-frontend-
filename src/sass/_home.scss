@@ -1,0 +1,196 @@
+.home {
+  padding-bottom: 2rem;
+
+  .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+
+    .left-col {
+      background-color: #fff;
+    }
+
+    .left-col,
+    .right-col {
+      border: 0.15rem solid #ededed;
+    }
+
+    .left-col {
+      .nav {
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        column-gap: 0.5rem;
+        border-bottom: 0.125rem solid #ececec;
+        padding-inline: 0.5rem;
+
+        button {
+          height: 100%;
+          border: 0.15rem solid transparent;
+          border-radius: 0;
+          font-size: 0.95rem;
+          font-family: $font-poppins;
+
+          &:hover {
+            border-bottom: 0.15rem solid #272626;
+          }
+        }
+      }
+
+      .question-box {
+        height: 4rem;
+        border-bottom: 0.125rem solid #ececec;
+        padding-inline: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (min-width: 768px) {
+          display: none;
+        }
+
+        a {
+          padding: 0.4rem 1rem;
+          border: 1px solid transparent;
+          color: #fefefe;
+          background-color: $primary-color;
+          border-radius: 0.1rem;
+          font-size: 0.95rem;
+
+          &:hover {
+            border-color: $primary-color;
+            background-color: transparent;
+            color: $primary-color;
+          }
+        }
+      }
+
+      .stats {
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        column-gap: 0.5rem;
+
+        @media (min-width: 768px) {
+          display: none;
+        }
+
+        div {
+          background-color: #fff;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          flex: 1;
+          padding: 0.8rem 0.2rem;
+
+          h4 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+          }
+
+          p {
+            font-family: 800;
+            font-size: 1.25rem;
+          }
+        }
+
+        .question-stats {
+          h4 {
+            color: $primary-color;
+          }
+        }
+
+        .answer-stats {
+          h4 {
+            color: $secondary-color;
+          }
+        }
+      }
+    }
+
+    .right-col {
+      .question-box {
+        height: 4rem;
+        border-bottom: 0.125rem solid #ececec;
+        padding-inline: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+
+        @media (max-width: 768px) {
+          display: none;
+        }
+
+        a {
+          padding: 0.4rem 1rem;
+          border: 1px solid transparent;
+          color: #fefefe;
+          background-color: $primary-color;
+          border-radius: 0.1rem;
+          font-size: 0.95rem;
+
+          &:hover {
+            border-color: $primary-color;
+            background-color: transparent;
+            color: $primary-color;
+          }
+        }
+      }
+
+      .sidebar {
+        padding-inline: 0.5rem;
+
+        .stats {
+          margin: 1rem 0;
+          display: flex;
+          align-items: center;
+          column-gap: 0.5rem;
+
+          @media (max-width: 768px) {
+            display: none;
+          }
+
+          div {
+            background-color: #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex: 1;
+            padding: 0.8rem 0.2rem;
+
+            h4 {
+              font-size: 1.1rem;
+              font-weight: 400;
+              margin-bottom: 0.5rem;
+            }
+
+            p {
+              font-family: 800;
+              font-size: 1.25rem;
+            }
+          }
+
+          .question-stats {
+            h4 {
+              color: $primary-color;
+            }
+          }
+
+          .answer-stats {
+            h4 {
+              color: $secondary-color;
+            }
+          }
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

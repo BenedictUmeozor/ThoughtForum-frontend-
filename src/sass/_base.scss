@@ -24,6 +24,14 @@ button {
   transition: all 0.3s ease;
 }
 
+img {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
 .icon {
   width: 1.5rem;
 }

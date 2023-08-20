@@ -1,8 +1,10 @@
 import { SearchIcon } from "../assets/icons";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Avatar from "./Avatar";
 
 const Header = () => {
+  const show = true;
+
   return (
     <header>
       <div className="container">
@@ -16,18 +18,31 @@ const Header = () => {
             <input type="text" placeholder="Search..." />
             <SearchIcon className="search-icon icon" />
           </div>
-          <div className="user-div">
-            <div className="user">
-              <Avatar />
-              <div className="auth">
-                <span>Logged in as</span>
-                <p>Benedict Umeozor</p>
+          {show ? (
+            <div className="user-div">
+              <div className="user">
+                <Link to={"/profile"}>
+                  <Avatar />
+                </Link>
+                <div className="auth">
+                  <span>Logged in as</span>
+                  <p>Benedict Umeozor</p>
+                </div>
               </div>
+              <Link to={"/"} className="logout">
+                Logout
+              </Link>
             </div>
-            <Link to={"/"} className="logout">
-              Logout
-            </Link>
-          </div>
+          ) : (
+            <div className="auth-links">
+              <NavLink to={"/login"} className="btn">
+                Signin
+              </NavLink>
+              <NavLink to={"/signup"} className="btn">
+                Signup
+              </NavLink>
+            </div>
+          )}
         </div>
       </div>
     </header>

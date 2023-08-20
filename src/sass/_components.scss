@@ -302,3 +302,80 @@ footer {
     }
   }
 }
+
+.profile-question {
+  margin-bottom: 0.8rem;
+  padding: 1rem;
+  background-color: #fcfcfc;
+  border-radius: 0.3rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+  .header {
+    a {
+      font-size: 1.05rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: $primary-color;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .body {
+    .category {
+      font-size: 0.85rem;
+
+      a {
+        color: $secondary-color;
+      }
+    }
+
+    .time {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.8rem;
+      color: #555;
+    }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.7rem;
+    background-color: #f3f3f3;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+
+    .icon {
+      width: 1.3rem;
+      cursor: pointer;
+    }
+
+    p {
+      display: flex;
+      align-items: center;
+      column-gap: 0.25rem;
+
+      span {
+        font-size: 0.9rem;
+      }
+    }
+
+    .icons {
+      display: flex;
+      align-items: center;
+      column-gap: 0.5rem;
+
+      .edit {
+        color: $primary-color;
+      }
+
+      .delete {
+        color: crimson;
+      }
+    }
+  }
+}
