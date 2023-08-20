@@ -8,10 +8,13 @@ const User = () => {
         <Avatar />
       </div>
       <div className="right">
-        <p className="name">Benedict Umeozor</p>
+        <div className="flex-between">
+          <p className="name">Benedict Umeozor</p>
+          <button>follow</button>
+        </div>
         <div className="questions">
-            <QuestionIcon className="icon" />
-            <span>50 questions</span>
+          <QuestionIcon className="icon" />
+          <span>50 questions</span>
         </div>
       </div>
     </div>

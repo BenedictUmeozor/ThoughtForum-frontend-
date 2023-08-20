@@ -11,6 +11,9 @@ const Question = () => {
             <Avatar />
             <span>Benedict Umeozor</span>
           </div>
+          <div className="user-actions">
+            <button>follow</button>
+          </div>
         </div>
         <span className="category">in <Link to={'/'}>Science and technology</Link></span>
       </div>

@@ -28,6 +28,12 @@ button {
   width: 1.5rem;
 }
 
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .container {
   width: 100%;
   max-width: 1200px;

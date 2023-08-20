@@ -17,14 +17,37 @@
     border-bottom: 0.15rem solid #ededed;
 
     .question-header {
-      .user {
+      .flex {
         display: flex;
         align-items: center;
-        column-gap: 0.25rem;
+        justify-content: space-between;
 
-        span {
-          font-weight: 450;
-          color: $secondary-color;
+        .user {
+          display: flex;
+          align-items: center;
+          column-gap: 0.25rem;
+
+          span {
+            font-weight: 450;
+            color: $secondary-color;
+          }
+        }
+
+        .user-actions {
+          button {
+            font-size: 0.95rem;
+            padding: 0.4rem 0.8rem;
+            color: #fefefe;
+            background-color: #111;
+            border-radius: 0.2rem;
+            border: 1px solid transparent;
+
+            &:hover {
+              background-color: transparent;
+              color: #111;
+              border-color: #111;
+            }
+          }
         }
       }
 
@@ -192,9 +215,26 @@
       display: grid;
       grid-template-columns: 1fr 5fr;
 
-      .name {
-        font-size: 0.97rem;
-        color: $secondary-color;
+      .flex-between {
+        .name {
+          font-size: 0.97rem;
+          color: $secondary-color;
+        }
+
+        button {
+          font-size: 0.92rem;
+          padding: 0.3rem 0.6rem;
+          color: #fefefe;
+          background-color: #111;
+          border-radius: 0.2rem;
+          border: 1px solid transparent;
+
+          &:hover {
+            background-color: transparent;
+            color: #111;
+            border-color: #111;
+          }
+        }
       }
 
       .questions {
