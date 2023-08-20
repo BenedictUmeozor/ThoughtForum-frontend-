@@ -9,15 +9,23 @@
   font-family: $font-inter;
 }
 
+:root {
+  font-size: 15px;
+}
+
 a {
   display: inline-block;
   color: $text-color;
   text-decoration: none;
+  transition: all 0.3s ease-in;
+}
+
+button {
+  transition: all 0.3s ease;
 }
 
 .icon {
   width: 1.5rem;
-  color: $primary-color;
 }
 
 .container {
@@ -25,6 +33,7 @@ a {
   max-width: 1200px;
   margin: auto;
   padding-inline: 0.5rem;
+  overflow-x: hidden;
 }
 
 body {

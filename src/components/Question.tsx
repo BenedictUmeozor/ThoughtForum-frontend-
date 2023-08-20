@@ -5,43 +5,32 @@ import { AnswerIcon, LikeIcon } from "../assets/icons";
 const Question = () => {
   return (
     <div className="question">
-      <div className="user">
-        <Avatar />
-      </div>
-      <div className="content">
-        <div className="content-header">
-          <span className="name">Benedict Umeozor </span>
-          <span>
-            in{" "}
-            <Link to={"/"} className="category">
-              Science and nature
-            </Link>
-          </span>
-        </div>
-        <div className="content-body">
-          <h3 className="title">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          </h3>
-          <p className="text">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui,
-            totam. Tempora, beatae omnis quasi blanditiis voluptatibus aliquid
-            optio eos corrupti.
-          </p>
-          <span className="time">Asked: August 20, 2023</span>
-        </div>
-        <div className="content-footer">
-          <div className="left">
-            <div className="like">
-              <LikeIcon className="icon like-icon" />
-              <span>242</span>
-            </div>
-            <div className="answer">
-              <AnswerIcon className="icon answer-icon" />
-              <span>21 answers</span>
-            </div>
+      <div className="question-header">
+        <div className="flex">
+          <div className="user">
+            <Avatar />
+            <span>Benedict Umeozor</span>
           </div>
-          <Link to={"/"}>Answer</Link>
         </div>
+        <span className="category">in <Link to={'/'}>Science and technology</Link></span>
+      </div>
+      <div className="question-body">
+        <h2 className="title">Lorem ipsum dolor sit amet consectetur</h2>
+        <p className="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis autem corrupti laboriosam maxime totam perferendis, voluptas possimus dolorum minus recusandae</p>
+        <span className="time">Asked: August 21, 2023</span>
+      </div>
+      <div className="question-footer">
+        <div className="question-info">
+          <div className="likes action">
+            <LikeIcon className="icon like-icon" />
+            <span>45</span>
+          </div>
+          <Link to={'/'} className="answers action">
+            <AnswerIcon className="icon answer-icon" />
+            <span>25</span>
+          </Link>
+        </div>
+        <Link to={'/'} className="answer">Answer</Link>
       </div>
     </div>
   );
