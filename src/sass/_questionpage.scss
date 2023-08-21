@@ -1,0 +1,116 @@
+.question-page {
+  .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      row-gap: 2rem;
+    }
+
+    .left-col {
+      @media (max-width: 768px) {
+        padding-inline: 0.5rem;
+      }
+      h2 {
+        font-size: 1.3rem;
+        font-weight: 500;
+        font-family: $font-poppins;
+        margin-bottom: 1.5rem;
+      }
+
+      .main-question {
+        border: 0.125rem solid #ddd;
+        padding: 1rem;
+        border-radius: 0.4rem;
+
+        .header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.6rem;
+
+          .user {
+            display: flex;
+            align-items: center;
+            column-gap: 0.3rem;
+
+            a {
+              font-weight: 500;
+              color: $secondary-color;
+              font-family: $font-poppins;
+            }
+          }
+
+          button {
+            background-color: #333;
+            color: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.14rem;
+            border: 1px solid transparent;
+
+            &:hover {
+              border-color: #333;
+              color: #333;
+              background-color: transparent;
+            }
+          }
+        }
+
+        .body {
+          h3 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+          }
+
+          p {
+            font-size: 0.97rem;
+            color: #333;
+            margin-bottom: 0.8rem;
+          }
+        }
+
+        .footer {
+          background-color: #eee;
+          padding: 1rem;
+          border-radius: 0.2rem;
+
+          .actions {
+            display: flex;
+            align-items: center;
+            column-gap: 0.7rem;
+
+            div {
+              display: flex;
+              align-items: center;
+              column-gap: 0.25rem;
+
+              .icon {
+                width: 1.3rem;
+              }
+
+              span {
+                font-size: 0.97rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .right-col {
+      .sidebar {
+        padding-inline: 0.5rem;
+
+        .hot-questions {
+          h2 {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+  }
+}
