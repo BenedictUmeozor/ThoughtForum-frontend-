@@ -1,7 +1,9 @@
 const QuestionPage = () => {
   return (
     <section className="question-page">
-      <div className="container"></div>
+      <div className="container">
+        <h2>Question</h2>
+      </div>
     </section>
   );
 };
