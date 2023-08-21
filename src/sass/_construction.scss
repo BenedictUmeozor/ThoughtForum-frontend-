@@ -1,0 +1,18 @@
+.construction-page {
+    padding: 2rem 0;
+
+  .construction {
+    margin: 2rem 0;
+
+    img {
+      width: 85%;
+      max-width: 400px;
+    }
+  }
+
+  p {
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: $font-poppins;
+  }
+}

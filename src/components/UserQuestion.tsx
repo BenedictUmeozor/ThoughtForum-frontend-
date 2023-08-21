@@ -5,7 +5,7 @@ const UserQuestion = () => {
   return (
     <div className="profile-question">
       <div className="header">
-        <Link to={"/"}>Lorem ipsum dolor sit amet consectetur.</Link>
+        <Link to={"/question/1"}>Lorem ipsum dolor sit amet consectetur.</Link>
       </div>
       <div className="body">
         <p className="category">
@@ -16,7 +16,7 @@ const UserQuestion = () => {
       <div className="footer">
         <p>
           <AnswerIcon className="icon" />
-          <span>24 answers</span>
+          <Link to={'/question/1'}>24 answers</Link>
         </p>
         <div className="icons">
           <PencilIcon className="icon edit" />

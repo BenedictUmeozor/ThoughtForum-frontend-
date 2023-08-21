@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { QuestionIcon } from "../assets/icons";
 import Avatar from "./Avatar";
 
@@ -9,7 +10,7 @@ const User = () => {
       </div>
       <div className="right">
         <div className="flex-between">
-          <p className="name">Benedict Umeozor</p>
+          <Link to={'/profile/1'} className="name">Benedict Umeozor</Link>
           <button>follow</button>
         </div>
         <div className="questions">

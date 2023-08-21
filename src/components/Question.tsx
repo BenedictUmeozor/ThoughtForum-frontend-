@@ -7,10 +7,10 @@ const Question = () => {
     <div className="question">
       <div className="question-header">
         <div className="flex">
-          <div className="user">
+          <Link to={'/profile/1'} className="user">
             <Avatar />
             <span>Benedict Umeozor</span>
-          </div>
+          </Link>
           <div className="user-actions">
             <button>follow</button>
           </div>
@@ -28,12 +28,12 @@ const Question = () => {
             <LikeIcon className="icon like-icon" />
             <span>45</span>
           </div>
-          <Link to={'/'} className="answers action">
+          <Link to={'/question/1'} className="answers action">
             <AnswerIcon className="icon answer-icon" />
             <span>25</span>
           </Link>
         </div>
-        <Link to={'/'} className="answer">Answer</Link>
+        <Link to={'/question/1'} className="answer">Answer</Link>
       </div>
     </div>
   );

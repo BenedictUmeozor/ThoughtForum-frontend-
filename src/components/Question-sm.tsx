@@ -5,10 +5,10 @@ import { AnswerIcon } from "../assets/icons";
 const Question = () => {
   return (
     <div className="question">
-      <div className="question-header">
+      <Link to='/profile/1' className="question-header">
         <Avatar />
         <span>Benedict Umeozor</span>
-      </div>
+      </Link>
       <div className="question-body">
         <Link to={'/'}>
             Lorem ipsum dolor sit amet consectetur.
@@ -16,7 +16,7 @@ const Question = () => {
       </div>
       <div className="question-footer">
         <AnswerIcon className="answer-icon icon" />
-        <span>12 answers</span>
+        <Link to={'/question/1'}>12 answers</Link>
       </div>
     </div>
   );
