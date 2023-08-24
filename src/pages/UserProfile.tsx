@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import male from "../assets/images/man.png";
-import { PencilIcon } from "../assets/icons";
 import UserQuestion from "../components/UserQuestion";
 //import female from '../assets/images/woman.png'
 
