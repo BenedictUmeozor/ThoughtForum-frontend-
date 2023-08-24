@@ -15,9 +15,7 @@ const UserProfile = () => {
             <div className="user-avatar">
               <img src={male} alt="user" />
             </div>
-            <Link to={"/"}>
-              Edit <PencilIcon className="icon" />
-            </Link>
+            <button className="follow-btn">follow</button>
           </div>
           <div className="follow">
             <div>
@@ -31,6 +29,7 @@ const UserProfile = () => {
               </p>
             </div>
           </div>
+          <span className="joined">Joined August 24, 2023</span>
         </div>
 
         <div className="user-details">

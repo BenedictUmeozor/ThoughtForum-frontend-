@@ -1,12 +1,14 @@
-import { SearchIcon } from "../assets/icons";
+import { MenuIcon, XIcon } from "../assets/icons";
 import { Link, NavLink } from "react-router-dom";
-import Avatar from "./Avatar";
+import { useState } from "react";
 
 const Header = () => {
+  const [showNav, setShowNav] = useState(false);
   const show = true;
 
   return (
     <header>
+      <div className={`overlay ${showNav ? "active" : ""}`}></div>
       <div className="container">
         <Link to={"/"} className="logo">
           <h1>
@@ -14,35 +16,42 @@ const Header = () => {
           </h1>
         </Link>
         <div className="right-col">
-          <div className="search-bar">
-            <input type="text" placeholder="Search..." />
-            <SearchIcon className="search-icon icon" />
+          <nav className="desktop-nav">
+            <NavLink to={"/"}>Questions</NavLink>
+            <NavLink to={"/categories"}>Categories</NavLink>
+            {show ? (
+              <>
+                <NavLink to={"/profile"}>Profile</NavLink>
+                <NavLink to={"/logout"}>Logout</NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink to={"/login"}>Logout</NavLink>
+                <NavLink to={"/signup"}>Logout</NavLink>
+              </>
+            )}
+          </nav>
+          <nav className={`mobile-nav ${showNav ? "active" : ""}`}>
+            <div className="close-icon" onClick={() => setShowNav(false)}>
+              <XIcon className="icon" />
+            </div>
+            <NavLink to={"/"}>Questions</NavLink>
+            <NavLink to={"/categories"}>Categories</NavLink>
+            {show ? (
+              <>
+                <NavLink to={"/profile"}>Profile</NavLink>
+                <NavLink to={"/logout"}>Logout</NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink to={"/login"}>Logout</NavLink>
+                <NavLink to={"/signup"}>Logout</NavLink>
+              </>
+            )}
+          </nav>
+          <div onClick={() => setShowNav(true)}>
+            <MenuIcon className="icon" />
           </div>
-          {show ? (
-            <div className="user-div">
-              <div className="user">
-                <Link to={"/profile"}>
-                  <Avatar />
-                </Link>
-                <div className="auth">
-                  <span>Logged in as</span>
-                  <p>Benedict Umeozor</p>
-                </div>
-              </div>
-              <Link to={"/"} className="logout">
-                Logout
-              </Link>
-            </div>
-          ) : (
-            <div className="auth-links">
-              <NavLink to={"/login"} className="btn">
-                Signin
-              </NavLink>
-              <NavLink to={"/signup"} className="btn">
-                Signup
-              </NavLink>
-            </div>
-          )}
         </div>
       </div>
     </header>

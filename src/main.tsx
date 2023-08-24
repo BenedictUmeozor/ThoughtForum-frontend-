@@ -17,6 +17,7 @@ const RootLayout = lazy(() => import("./layouts/RootLayout.tsx"));
 const UserProfile = lazy(() => import("./pages/UserProfile.tsx"));
 const Construction = lazy(() => import("./pages/Construction.tsx"));
 const QuestionPage = lazy(() => import("./pages/QuestionPage.tsx"));
+const CategoriesPage = lazy(() => import("./pages/CategoriesPage"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile />} />
       <Route path="profile/:id" element={<UserProfile />} />
       <Route path="question/:id" element={<QuestionPage />} />
+      <Route path="categories" element={<CategoriesPage />} />
       <Route path="*" element={<Construction />} />
     </Route>
   )

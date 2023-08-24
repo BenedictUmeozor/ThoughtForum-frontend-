@@ -48,13 +48,28 @@
             width: 1.15rem;
           }
         }
+
+        button {
+          background-color: #333;
+          color: #fefefe;
+          border: 1px solid transparent;
+          border-radius: 0.2rem;
+          padding: 0.4rem 0.8rem;
+          align-self: flex-start;
+
+          &:hover {
+            background-color: transparent;
+            border-color: #333;
+            color: #333;
+          }
+        }
       }
 
       .follow {
         display: flex;
         align-items: center;
         column-gap: 0.5rem;
-        margin: 0.8rem 0 1.5rem;
+        margin: 0.8rem 0;
 
         p {
           font-weight: 600;
@@ -65,6 +80,11 @@
             color: #444;
           }
         }
+      }
+
+      .joined {
+        color: #555;
+        font-size: 0.85rem
       }
     }
 

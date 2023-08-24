@@ -73,6 +73,10 @@
         font-weight: 500;
       }
 
+      a:hover {
+        text-decoration: underline;
+      }
+
       .body {
         color: #222;
         font-size: 0.96rem;
@@ -316,7 +320,7 @@ footer {
       display: block;
       margin-bottom: 0.5rem;
       color: $primary-color;
-      
+
       &:hover {
         text-decoration: underline;
       }
@@ -376,6 +380,85 @@ footer {
       .delete {
         color: crimson;
       }
+    }
+  }
+}
+
+.answer {
+  border: 0.125rem solid #eee;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  background-color: #fcfcfc;
+
+  .answer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.7rem;
+
+    .user {
+      display: flex;
+      align-items: center;
+      column-gap: 0.25rem;
+
+      span {
+        color: $primary-color;
+      }
+    }
+
+    .edit {
+      display: flex;
+      align-items: center;
+      column-gap: 0.75rem;
+
+      span {
+        font-weight: 0.93rem;
+        color: #333;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        column-gap: 0.25rem;
+        padding: 0.4rem 0.8rem;
+        border: 1px solid #bbb;
+        border-radius: 0.3rem;
+        align-self: flex-end;
+
+        .icon {
+          width: 1.15rem;
+        }
+      }
+    }
+  }
+
+  .answer-body {
+    margin: 0.7rem 0;
+
+    p {
+      font-size: 0.97rem;
+      color: #222;
+    }
+
+    span {
+      display: inline-block;
+      margin-top: 0.4rem;
+      font-size: 0.8rem;
+      color: #555;
+    }
+  }
+
+  .answer-footer {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+
+    .icon {
+      width: 1.5rem;
+      cursor: pointer;
     }
   }
 }

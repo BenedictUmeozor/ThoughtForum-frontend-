@@ -3,6 +3,7 @@ import HotQuestions from "../components/HotQuestions";
 import TopMembers from "../components/TopMembers";
 import Avatar from "../components/Avatar";
 import { AnswerIcon, LikeIcon } from "../assets/icons";
+import Answer from "../components/Answer";
 
 const QuestionPage = () => {
   return (
@@ -17,8 +18,14 @@ const QuestionPage = () => {
                 <Link to={"/profile/1"}>Benedict Umeozor</Link>
               </div>
 
-              <button>follow</button>
+              <div className="follow-edit-div">
+                <span>Edited</span>
+                <button>follow</button>
+              </div>
             </div>
+            <p className="category">
+              in <Link to={"/categories/1"}>Science and technology</Link>
+            </p>
             <div className="body">
               <h3>Lorem ipsum dolor sit amet consectetur.</h3>
               <p>
@@ -38,6 +45,18 @@ const QuestionPage = () => {
                   <span>24</span>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="answers-div">
+            <div className="answers-count">
+              <p>
+                <span>24</span> answers
+              </p>
+            </div>
+            <div className="answers-list">
+              <Answer />
+              <Answer />
+              <Answer />
             </div>
           </div>
         </div>

@@ -44,7 +44,7 @@ img {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
   padding-inline: 0.5rem;
   overflow-x: hidden;
@@ -66,4 +66,15 @@ button {
   padding: 0.4rem 0.7rem;
   border-radius: 3px;
   transition: all 0.3s ease-in;
+}
+
+.follow-edit-div {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+
+  span {
+    font-size: 0.93rem;
+    color: #333;
+  }
 }

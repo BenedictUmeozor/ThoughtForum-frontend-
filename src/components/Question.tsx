@@ -7,19 +7,30 @@ const Question = () => {
     <div className="question">
       <div className="question-header">
         <div className="flex">
-          <Link to={'/profile/1'} className="user">
+          <Link to={"/profile/1"} className="user">
             <Avatar />
             <span>Benedict Umeozor</span>
           </Link>
           <div className="user-actions">
-            <button>follow</button>
+            <div className="follow-edit-div">
+              <span>Edited</span>
+              <button>follow</button>
+            </div>
           </div>
         </div>
-        <span className="category">in <Link to={'/'}>Science and technology</Link></span>
+        <span className="category">
+          in <Link to={"/categories/1"}>Science and technology</Link>
+        </span>
       </div>
       <div className="question-body">
-        <h2 className="title">Lorem ipsum dolor sit amet consectetur</h2>
-        <p className="body">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis autem corrupti laboriosam maxime totam perferendis, voluptas possimus dolorum minus recusandae</p>
+        <Link to={"/question/1"}>
+          <h2 className="title">Lorem ipsum dolor sit amet consectetur</h2>
+        </Link>
+        <p className="body">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis
+          autem corrupti laboriosam maxime totam perferendis, voluptas possimus
+          dolorum minus recusandae
+        </p>
         <span className="time">Asked: August 21, 2023</span>
       </div>
       <div className="question-footer">
@@ -28,12 +39,14 @@ const Question = () => {
             <LikeIcon className="icon like-icon" />
             <span>45</span>
           </div>
-          <Link to={'/question/1'} className="answers action">
+          <Link to={"/question/1"} className="answers action">
             <AnswerIcon className="icon answer-icon" />
             <span>25</span>
           </Link>
         </div>
-        <Link to={'/question/1'} className="answer">Answer</Link>
+        <Link to={"/question/1"} className="answer">
+          Answer
+        </Link>
       </div>
     </div>
   );

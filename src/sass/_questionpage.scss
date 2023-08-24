@@ -22,7 +22,8 @@
       }
 
       .main-question {
-        border: 0.125rem solid #ddd;
+        border: 0.125rem solid #eee;
+        background-color: #fcfcfc;
         padding: 1rem;
         border-radius: 0.4rem;
 
@@ -59,6 +60,19 @@
           }
         }
 
+        .category {
+          margin-bottom: 0.5rem;
+          font-size: 0.85rem;
+
+          a {
+            color: $primary-color;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
         .body {
           h3 {
             font-size: 1.15rem;
@@ -74,7 +88,7 @@
         }
 
         .footer {
-          background-color: #eee;
+          background-color: #f5f5f5;
           padding: 1rem;
           border-radius: 0.2rem;
 
@@ -97,6 +111,23 @@
               }
             }
           }
+        }
+      }
+
+      .answers-div {
+        .answers-count {
+          margin: 2rem 0;
+
+          p {
+            font-size: 1rem;
+
+            span {
+              font-weight: 600;
+            }
+          }
+        }
+        .answer {
+          margin: 1rem 0;
         }
       }
     }

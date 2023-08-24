@@ -31,6 +31,7 @@ const Profile = () => {
               </p>
             </div>
           </div>
+          <span className="joined">Joined August 24, 2023</span>
         </div>
 
         <div className="user-details">
@@ -54,12 +55,12 @@ const Profile = () => {
         </div>
 
         <div className="user-questions">
-            <h3>Questions</h3>
-            <div className="list">
-                <UserQuestion />
-                <UserQuestion />
-                <UserQuestion />
-            </div>
+          <h3>Questions</h3>
+          <div className="list">
+            <UserQuestion />
+            <UserQuestion />
+            <UserQuestion />
+          </div>
         </div>
       </div>
     </section>
