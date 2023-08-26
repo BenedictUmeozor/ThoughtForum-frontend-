@@ -8,7 +8,7 @@ const Answer = () => {
       <div className="answer-header">
         <Link to={"/profile/1"} className="user">
           <Avatar />
-          <span>Benedict Umeozor</span>
+          <span>John Doe</span>
         </Link>
         <div className="edit">
           <span>Edited</span>

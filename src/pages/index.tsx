@@ -22,7 +22,7 @@ const Home = () => {
             </div>
           </div>
           <div className="nav">
-            <button>Recent questions</button>
+            <button className="active">Recent questions</button>
             <button>Top questions</button>
             <button>Following</button>
           </div>

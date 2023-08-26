@@ -41,7 +41,6 @@
             a {
               font-weight: 500;
               color: $secondary-color;
-              font-family: $font-poppins;
             }
           }
 
@@ -83,7 +82,14 @@
           p {
             font-size: 0.97rem;
             color: #333;
+            margin-bottom: 0.4rem;
+          }
+
+          span {
+            font-size: 0.85rem;
+            display: inline-block;
             margin-bottom: 0.8rem;
+            color: #555;
           }
         }
 
@@ -116,13 +122,40 @@
 
       .answers-div {
         .answers-count {
-          margin: 2rem 0;
+          margin: 1rem 0;
 
           p {
-            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 0.125rem;
+            box-shadow: 0 1p 2px rgba(0, 0, 0, 0.1);
 
-            span {
-              font-weight: 600;
+            div {
+              font-size: 0.96rem;
+              color: #555;
+              span {
+                font-weight: 600;
+              }
+            }
+
+            button {
+              &.answer-btn {
+                font-size: 0.95rem;
+                padding: 0.35rem 0.8rem;
+                border-radius: 0.125rem;
+                display: flex;
+                align-items: center;
+                column-gap: 0.25rem;
+                color: #444;
+                border: 1px solid #aaa;
+
+                .icon {
+                  width: 1.3rem;
+                }
+              }
             }
           }
         }

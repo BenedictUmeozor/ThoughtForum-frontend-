@@ -32,7 +32,11 @@
           font-family: $font-poppins;
 
           &:hover {
-            border-bottom: 0.15rem solid #272626;
+            color: $primary-color;
+          }
+
+          &.active {
+            color: $primary-color;
           }
         }
       }

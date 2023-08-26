@@ -10,7 +10,6 @@ const QuestionPage = () => {
     <section className="question-page">
       <div className="container">
         <div className="left-col">
-          <h2>Question</h2>
           <div className="main-question">
             <div className="header">
               <div className="user">
@@ -33,6 +32,7 @@ const QuestionPage = () => {
                 rerum enim at vero repudiandae eius esse nisi assumenda delectus
                 sequi?
               </p>
+              <span className="time">Asked: August 21, 2023</span>
             </div>
             <div className="footer">
               <div className="actions">
@@ -50,7 +50,11 @@ const QuestionPage = () => {
           <div className="answers-div">
             <div className="answers-count">
               <p>
-                <span>24</span> answers
+                <div>Showing <span>24</span> answers</div>
+                <button className="answer-btn">
+                  <AnswerIcon className="icon" />
+                  Answer
+                </button>
               </p>
             </div>
             <div className="answers-list">

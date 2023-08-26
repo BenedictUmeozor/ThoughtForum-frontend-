@@ -35,17 +35,17 @@ const Header = () => {
             <div className="close-icon" onClick={() => setShowNav(false)}>
               <XIcon className="icon" />
             </div>
-            <NavLink to={"/"}>Questions</NavLink>
-            <NavLink to={"/categories"}>Categories</NavLink>
+            <NavLink to={"/"} onClick={() => setShowNav(false)}>Questions</NavLink>
+            <NavLink to={"/categories"} onClick={() => setShowNav(false)}>Categories</NavLink>
             {show ? (
               <>
-                <NavLink to={"/profile"}>Profile</NavLink>
-                <NavLink to={"/logout"}>Logout</NavLink>
+                <NavLink to={"/profile"} onClick={() => setShowNav(false)}>Profile</NavLink>
+                <NavLink to={"/logout"} onClick={() => setShowNav(false)}>Logout</NavLink>
               </>
             ) : (
               <>
-                <NavLink to={"/login"}>Logout</NavLink>
-                <NavLink to={"/signup"}>Logout</NavLink>
+                <NavLink to={"/login"} onClick={() => setShowNav(false)}>Signin</NavLink>
+                <NavLink to={"/signup"} onClick={() => setShowNav(false)}>Signup</NavLink>
               </>
             )}
           </nav>
