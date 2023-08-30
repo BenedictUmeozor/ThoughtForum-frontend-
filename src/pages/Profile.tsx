@@ -4,12 +4,14 @@ import UserQuestion from "../components/UserQuestion";
 import { useState } from "react";
 import UsersModal from "../components/UsersModal";
 import EditModal from "../components/EditModal";
+import EditQuestionForm from "../components/EditQuestionForm";
 //import female from '../assets/images/woman.png'
 
 const Profile = () => {
   const [modalTitle, setModalTitle] = useState("Followers");
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   const showEditProfileModal = () => {
     setShowEditModal(true);
@@ -31,6 +33,7 @@ const Profile = () => {
         <UsersModal title={modalTitle} onClose={() => setShowModal(false)} />
       )}
       {showEditModal && <EditModal onClose={() => setShowEditModal(false)} />}
+      {showForm && <EditQuestionForm onClose={() => setShowForm(false)} />}
       <div className="container">
         <h2>My Profile</h2>
         <div className="user">
@@ -80,9 +83,9 @@ const Profile = () => {
         <div className="user-questions">
           <h3>Questions</h3>
           <div className="list">
-            <UserQuestion />
-            <UserQuestion />
-            <UserQuestion />
+            <UserQuestion onClick={() => setShowForm(true)} />
+            <UserQuestion onClick={() => setShowForm(true)} />
+            <UserQuestion onClick={() => setShowForm(true)} />
           </div>
         </div>
       </div>

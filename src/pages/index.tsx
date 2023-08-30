@@ -1,15 +1,19 @@
-import { Link } from "react-router-dom";
 import Questions from "../components/Questions";
 import HotQuestions from "../components/HotQuestions";
 import TopMembers from "../components/TopMembers";
+import { useState } from "react";
+import AddQuestionForm from "../components/AddQuestionForm";
 
 const Home = () => {
+  const [showAddForm, setShowAddForm] = useState(false);
+
   return (
     <section className="home">
+      {showAddForm && <AddQuestionForm onClose={() => setShowAddForm(false)} />}
       <div className="container">
         <div className="left-col">
           <div className="question-box">
-            <Link to={"/"}>Ask a question</Link>
+            <button>Ask a question</button>
           </div>
           <div className="stats">
             <div className="question-stats">
@@ -30,7 +34,7 @@ const Home = () => {
         </div>
         <div className="right-col">
           <div className="question-box">
-            <Link to={"/"}>Ask a question</Link>
+            <button onClick={() => setShowAddForm(true)}>Ask a question</button>
           </div>
           <div className="sidebar">
             <div className="stats">

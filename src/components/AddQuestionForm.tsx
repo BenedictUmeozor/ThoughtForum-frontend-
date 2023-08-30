@@ -5,34 +5,27 @@ type PropTypes = {
   onClose?: (event: MouseEvent) => void;
 };
 
-const EditModal = ({ onClose }: PropTypes) => {
+const AddQuestionForm = ({ onClose }: PropTypes) => {
   return (
     <div className="modal">
-      <div className="modal-content profile">
+      <div className="modal-content question-modal">
         <div className="close">
           <div onClick={onClose}>
             <XIcon className="icon" />
           </div>
         </div>
-        <p className="main-title">Edit Profile</p>
+        <p className="main-title">Edit Question</p>
         <form className="form">
           <div className="field">
-            <label>Name</label>
+            <label>Title</label>
             <input type="text" />
           </div>
           <div className="field">
-            <label>Email</label>
-            <input type="text" disabled />
+            <label>Category</label>
+            <input type="text" />
           </div>
           <div className="field">
-            <label>Gender</label>
-            <select>
-              <option value="male">male</option>
-              <option value="female">female</option>
-            </select>
-          </div>
-          <div className="field">
-            <label>Bio:</label>
+            <label>Body</label>
             <textarea rows={8}></textarea>
           </div>
           <button type="submit">Update</button>
@@ -42,4 +35,4 @@ const EditModal = ({ onClose }: PropTypes) => {
   );
 };
 
-export default EditModal;
+export default AddQuestionForm;

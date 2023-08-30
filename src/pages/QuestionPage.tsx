@@ -5,13 +5,19 @@ import Avatar from "../components/Avatar";
 import { AnswerIcon, LikeIcon } from "../assets/icons";
 import Answer from "../components/Answer";
 import { useState } from "react";
+import EditAnswer from "../components/EditAnswer";
+import AddAnswerForm from "../components/AddAnswerForm";
 
 const QuestionPage = () => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   return (
     <section className="question-page">
+      {showEditForm && <EditAnswer onClose={() => setShowEditForm(false)} />}
+      {showAddForm && <AddAnswerForm onClose={() => setShowAddForm(false)} />}
       <div className="container">
         <div className="left-col">
           <div className="main-question">
@@ -77,16 +83,16 @@ const QuestionPage = () => {
                 <div>
                   Showing <span>24</span> answers
                 </div>
-                <button className="answer-btn">
+                <button className="answer-btn" onClick={() => setShowAddForm(true)}>
                   <AnswerIcon className="icon" />
                   Answer
                 </button>
               </p>
             </div>
             <div className="answers-list">
-              <Answer />
-              <Answer />
-              <Answer />
+              <Answer onClick={() => setShowEditForm(true)} />
+              <Answer onClick={() => setShowEditForm(true)} />
+              <Answer onClick={() => setShowEditForm(true)} />
             </div>
           </div>
         </div>

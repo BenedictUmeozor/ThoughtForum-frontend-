@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { EllipsisVertical, LikeIcon } from "../assets/icons";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 
-const Answer = () => {
+type PropTypes = {
+  onClick?: (event: MouseEvent) => void;
+};
+
+const Answer = ({ onClick }: PropTypes) => {
   const [showActions, setShowActions] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -20,7 +24,7 @@ const Answer = () => {
             <EllipsisVertical className="icon" />
           </div>
           <div className={`user-actions ${showActions && "active"}`}>
-            <p>edit</p>
+            <p onClick={onClick}>edit</p>
             <p>delete</p>
           </div>
         </div>
