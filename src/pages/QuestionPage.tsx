@@ -4,8 +4,12 @@ import TopMembers from "../components/TopMembers";
 import Avatar from "../components/Avatar";
 import { AnswerIcon, LikeIcon } from "../assets/icons";
 import Answer from "../components/Answer";
+import { useState } from "react";
 
 const QuestionPage = () => {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+
   return (
     <section className="question-page">
       <div className="container">
@@ -19,7 +23,21 @@ const QuestionPage = () => {
 
               <div className="follow-edit-div">
                 <span>Edited</span>
-                <button>follow</button>
+                {isFollowing ? (
+                  <button
+                    className="following"
+                    onClick={() => setIsFollowing(false)}
+                  >
+                    following
+                  </button>
+                ) : (
+                  <button
+                    className="follow"
+                    onClick={() => setIsFollowing(true)}
+                  >
+                    follow
+                  </button>
+                )}
               </div>
             </div>
             <p className="category">
@@ -36,8 +54,14 @@ const QuestionPage = () => {
             </div>
             <div className="footer">
               <div className="actions">
-                <div className="likes">
-                  <LikeIcon className="icon" />
+                <div
+                  className="likes"
+                  onClick={() => setIsLiked((prev) => !prev)}
+                >
+                  <LikeIcon
+                    className="icon"
+                    fill={isLiked ? "crimson" : "none"}
+                  />
                   <span>254</span>
                 </div>
                 <div className="answers">
@@ -50,7 +74,9 @@ const QuestionPage = () => {
           <div className="answers-div">
             <div className="answers-count">
               <p>
-                <div>Showing <span>24</span> answers</div>
+                <div>
+                  Showing <span>24</span> answers
+                </div>
                 <button className="answer-btn">
                   <AnswerIcon className="icon" />
                   Answer

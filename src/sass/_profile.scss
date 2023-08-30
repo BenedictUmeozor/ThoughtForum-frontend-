@@ -35,7 +35,7 @@
           }
         }
 
-        a {
+        .edit-btn {
           display: flex;
           align-items: center;
           column-gap: 0.25rem;
@@ -50,18 +50,7 @@
         }
 
         button {
-          background-color: #333;
-          color: #fefefe;
-          border: 1px solid transparent;
-          border-radius: 0.2rem;
-          padding: 0.4rem 0.8rem;
           align-self: flex-start;
-
-          &:hover {
-            background-color: transparent;
-            border-color: #333;
-            color: #333;
-          }
         }
       }
 

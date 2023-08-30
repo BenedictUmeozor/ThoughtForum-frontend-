@@ -1,0 +1,50 @@
+.categories {
+  .container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+
+    .left-col {
+      background-color: #fff;
+
+      .category {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        column-gap: 0.4rem;
+        row-gap: 0.5rem;
+        margin-top: 1rem;
+        padding: 0.5rem;
+
+        button {
+          padding: 0.4rem 0.8rem;
+          border: 1px solid #ccc;
+          border-radius: 0.2rem;
+          text-transform: capitalize;
+
+          &.active {
+            color: #fff;
+            background-color: $primary-color;
+            border-color: $primary-color;
+          }
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+
+      .active-category {
+        color: $primary-color;
+        margin-top: 1.5rem;
+        font-size: 1.25rem;
+        font-weight: 500;
+        padding-left: 1rem;
+      }
+    }
+  }
+}

@@ -1,10 +1,29 @@
+import { useState } from "react";
 import male from "../assets/images/man.png";
 import UserQuestion from "../components/UserQuestion";
+import UsersModal from "../components/UsersModal";
 //import female from '../assets/images/woman.png'
 
 const UserProfile = () => {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [modalTitle, setModalTitle] = useState("Followers");
+  const [showModal, setShowModal] = useState(false);
+
+  const showFollowers = () => {
+    setModalTitle("Followers");
+    setShowModal(true);
+  };
+
+  const showFollowing = () => {
+    setModalTitle("Following");
+    setShowModal(true);
+  };
+
   return (
     <section className="profile">
+      {showModal && (
+        <UsersModal title={modalTitle} onClose={() => setShowModal(false)} />
+      )}
       <div className="container">
         <h2>Profile</h2>
 
@@ -13,16 +32,27 @@ const UserProfile = () => {
             <div className="user-avatar">
               <img src={male} alt="user" />
             </div>
-            <button className="follow-btn">follow</button>
+            {isFollowing ? (
+              <button
+                className="following"
+                onClick={() => setIsFollowing(false)}
+              >
+                following
+              </button>
+            ) : (
+              <button className="follow" onClick={() => setIsFollowing(true)}>
+                follow
+              </button>
+            )}
           </div>
           <div className="follow">
             <div>
-              <p>
+              <p onClick={showFollowing}>
                 13 <span>following</span>
               </p>
             </div>
             <div>
-              <p>
+              <p onClick={showFollowers}>
                 130 <span>followers</span>
               </p>
             </div>

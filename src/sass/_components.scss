@@ -32,23 +32,6 @@
             color: $secondary-color;
           }
         }
-
-        .user-actions {
-          button {
-            font-size: 0.95rem;
-            padding: 0.4rem 0.8rem;
-            color: #fefefe;
-            background-color: #111;
-            border-radius: 0.2rem;
-            border: 1px solid transparent;
-
-            &:hover {
-              background-color: transparent;
-              color: #111;
-              border-color: #111;
-            }
-          }
-        }
       }
 
       .category {
@@ -173,6 +156,11 @@
           font-size: 1.05rem;
           margin: 0.5rem 0 0.7rem;
           font-weight: 600;
+
+          &:hover {
+            color: $primary-color;
+            text-decoration: underline;
+          }
         }
       }
 
@@ -223,21 +211,6 @@
         .name {
           font-size: 0.97rem;
           color: $secondary-color;
-        }
-
-        button {
-          font-size: 0.92rem;
-          padding: 0.3rem 0.6rem;
-          color: #fefefe;
-          background-color: #111;
-          border-radius: 0.2rem;
-          border: 1px solid transparent;
-
-          &:hover {
-            background-color: transparent;
-            color: #111;
-            border-color: #111;
-          }
         }
       }
 
@@ -299,10 +272,14 @@ footer {
     }
 
     .copyright {
-      text-align: center;
+      text-align: left;
       margin-top: 1rem;
       font-weight: 400;
       font-size: 0.95rem;
+
+      @media (max-width: 768px) {
+        text-align: center;
+      }
     }
   }
 }
@@ -363,7 +340,7 @@ footer {
       align-items: center;
       column-gap: 0.25rem;
 
-      span {
+      a {
         font-size: 0.9rem;
       }
     }
@@ -410,24 +387,49 @@ footer {
       display: flex;
       align-items: center;
       column-gap: 0.75rem;
+      position: relative;
+
+      .user-actions {
+        position: absolute;
+        top: 120%;
+        right: 0;
+        z-index: 3;
+        background-color: #fff;
+        border-radius: 0.2rem;
+        box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+        width: 100px;
+        transition: all 0.3s ease;
+        transform-origin: top right;
+        transform: scale(0);
+
+        &.active {
+          transform: scale(1);
+        }
+
+        p {
+          padding: 0.6rem;
+          font-size: 0.95rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid #f2f2f2;
+          }
+
+          &:hover {
+            background-color: #f2f2f2;
+          }
+        }
+      }
 
       span {
         font-weight: 0.93rem;
         color: #333;
       }
 
-      button {
-        display: flex;
-        align-items: center;
-        column-gap: 0.25rem;
-        padding: 0.4rem 0.8rem;
-        border: 1px solid #bbb;
-        border-radius: 0.3rem;
-        align-self: flex-end;
-
-        .icon {
-          width: 1.15rem;
-        }
+      .icon {
+        cursor: pointer;
+        color: #333;
       }
     }
   }
@@ -454,11 +456,89 @@ footer {
     border-radius: 0.2rem;
     display: flex;
     align-items: center;
-    column-gap: 0.5rem;
+    column-gap: 0.3rem;
 
-    .icon {
-      width: 1.5rem;
-      cursor: pointer;
+    div {
+      .icon {
+        width: 1.5rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.modal {
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: scroll;
+
+  .modal-content {
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    margin: 2rem auto 1rem;
+    padding: 1rem;
+    border-radius: 0.6rem;
+
+    .close {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 1.1rem;
+
+      .icon {
+        width: 2rem;
+        color: crimson;
+        cursor: pointer;
+      }
+    }
+
+    .main-title {
+      margin-bottom: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    &.users {
+      .title {
+        font-family: $font-poppins;
+        margin-bottom: 0.5rem;
+      }
+
+      .follows {
+        overflow-y: scroll;
+        max-height: 70vh;
+
+        .user {
+          padding: 0.8rem;
+          border: 1.5px solid #ddd;
+          border-radius: 0.2rem;
+
+          &:not(:last-child) {
+            margin-bottom: 0.5rem;
+          }
+
+          .flex {
+            display: flex;
+            align-items: center;
+            column-gap: 0.25rem;
+
+            .name {
+              color: $secondary-color;
+            }
+          }
+
+          .question-count {
+            font-size: 0.95rem;
+            margin-top: 0.6rem;
+          }
+        }
+      }
     }
   }
 }

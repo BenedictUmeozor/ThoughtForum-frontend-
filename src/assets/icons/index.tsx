@@ -2,6 +2,10 @@ type IconProps = {
   className?: string;
 };
 
+type LikeIconProps = {
+  fill?: string;
+} & IconProps;
+
 export const ChatIcon = ({ className }: IconProps) => {
   return (
     <svg
@@ -42,12 +46,12 @@ export const SearchIcon = ({ className }: IconProps) => {
   );
 };
 
-export const LikeIcon = ({ className }: IconProps) => {
+export const LikeIcon = ({ className, fill = "none" }: LikeIconProps) => {
   return (
     <svg
       className={className}
-      fill="none"
-      stroke="currentColor"
+      fill={fill}
+      stroke={fill === "none" ? "currentColor" : fill}
       strokeWidth="1.5"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
@@ -286,4 +290,62 @@ export const XIcon = ({ className }: IconProps) => {
       ></path>
     </svg>
   );
+};
+
+export const EllipsisVertical = ({ className }: IconProps) => {
+  return (
+    <svg
+      fill="none"
+      className={className}
+      stroke="currentColor"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+      ></path>
+    </svg>
+  );
+};
+
+export const BeakerIcon = ({ className }: IconProps) => {
+  return (
+    <svg
+      fill="none"
+      className={className}
+      stroke="currentColor"
+      strokeWidth="1.5"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"
+      ></path>
+    </svg>
+  );
+};
+
+export const ComputerIcon = ({ className }: IconProps) => {
+  <svg
+    fill="none"
+    className={className}
+    stroke="currentColor"
+    strokeWidth="1.5"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+    ></path>
+  </svg>;
 };

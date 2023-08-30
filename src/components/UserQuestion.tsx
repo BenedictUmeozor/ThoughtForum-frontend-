@@ -16,11 +16,15 @@ const UserQuestion = () => {
       <div className="footer">
         <p>
           <AnswerIcon className="icon" />
-          <Link to={'/question/1'}>24 answers</Link>
+          <Link to={"/question/1"}>24 answers</Link>
         </p>
         <div className="icons">
-          <PencilIcon className="icon edit" />
-          <TrashIcon className="icon delete" />
+          <div>
+            <PencilIcon className="icon edit" />
+          </div>
+          <div>
+            <TrashIcon className="icon delete" />
+          </div>
         </div>
       </div>
     </div>

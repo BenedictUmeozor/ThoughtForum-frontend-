@@ -1,32 +1,55 @@
-import { Link } from "react-router-dom";
 import male from "../assets/images/man.png";
 import { PencilIcon } from "../assets/icons";
 import UserQuestion from "../components/UserQuestion";
+import { useState } from "react";
+import UsersModal from "../components/UsersModal";
+import EditModal from "../components/EditModal";
 //import female from '../assets/images/woman.png'
 
 const Profile = () => {
+  const [modalTitle, setModalTitle] = useState("Followers");
+  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const showEditProfileModal = () => {
+    setShowEditModal(true);
+  };
+
+  const showFollowers = () => {
+    setModalTitle("Followers");
+    setShowModal(true);
+  };
+
+  const showFollowing = () => {
+    setModalTitle("Following");
+    setShowModal(true);
+  };
+
   return (
     <section className="profile">
+      {showModal && (
+        <UsersModal title={modalTitle} onClose={() => setShowModal(false)} />
+      )}
+      {showEditModal && <EditModal onClose={() => setShowEditModal(false)} />}
       <div className="container">
         <h2>My Profile</h2>
-
         <div className="user">
           <div className="flex">
             <div className="user-avatar">
               <img src={male} alt="user" />
             </div>
-            <Link to={"/"}>
+            <button className="edit-btn" onClick={showEditProfileModal}>
               Edit <PencilIcon className="icon" />
-            </Link>
+            </button>
           </div>
           <div className="follow">
             <div>
-              <p>
+              <p onClick={showFollowing}>
                 13 <span>following</span>
               </p>
             </div>
             <div>
-              <p>
+              <p onClick={showFollowers}>
                 130 <span>followers</span>
               </p>
             </div>

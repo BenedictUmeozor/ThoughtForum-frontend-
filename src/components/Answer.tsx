@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import { LikeIcon, PencilIcon } from "../assets/icons";
+import { EllipsisVertical, LikeIcon } from "../assets/icons";
+import { useState } from "react";
 
 const Answer = () => {
+  const [showActions, setShowActions] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+
   return (
     <div className="answer">
       <div className="answer-header">
@@ -12,9 +16,13 @@ const Answer = () => {
         </Link>
         <div className="edit">
           <span>Edited</span>
-          <button>
-            Edit <PencilIcon className="icon" />
-          </button>
+          <div onClick={() => setShowActions((prev) => !prev)}>
+            <EllipsisVertical className="icon" />
+          </div>
+          <div className={`user-actions ${showActions && "active"}`}>
+            <p>edit</p>
+            <p>delete</p>
+          </div>
         </div>
       </div>
       <div className="answer-body">
@@ -27,7 +35,9 @@ const Answer = () => {
         <span className="time">August 24, 2023</span>
       </div>
       <div className="answer-footer">
-        <LikeIcon className="icon" />
+        <div onClick={() => setIsLiked((prev) => !prev)}>
+          <LikeIcon className="icon" fill={isLiked ? "crimson" : "none"} />
+        </div>
         <span>43</span>
       </div>
     </div>
