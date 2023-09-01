@@ -87,6 +87,10 @@ button {
   border: 0;
   cursor: pointer;
   background-color: transparent;
+
+  &:disabled {
+    opacity: 0.7;
+  }
 }
 
 .btn {
