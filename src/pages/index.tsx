@@ -13,7 +13,7 @@ const Home = () => {
       <div className="container">
         <div className="left-col">
           <div className="question-box">
-            <button>Ask a question</button>
+            <button onClick={() => setShowAddForm(true)}>Ask a question</button>
           </div>
           <div className="stats">
             <div className="question-stats">
