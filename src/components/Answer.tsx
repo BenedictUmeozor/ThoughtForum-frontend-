@@ -1,48 +1,95 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import { EllipsisVertical, LikeIcon } from "../assets/icons";
-import { MouseEvent, useState } from "react";
+import {
+  EllipsisVertical,
+  LikeIcon,
+  PencilIcon,
+  TrashIcon,
+} from "../assets/icons";
+import { useState } from "react";
+import { AnswerInterface } from "../helpers/interfaces";
+import { lightFormat } from "date-fns";
+import { useAppSelector } from "../hooks/hooks";
+import EditAnswer from "./EditAnswer";
+import { axiosAuth } from "../axios/axios";
 
 type PropTypes = {
-  onClick?: (event: MouseEvent) => void;
+  answer: AnswerInterface;
+  onFetch: Function;
 };
 
-const Answer = ({ onClick }: PropTypes) => {
+const Answer = ({ answer, onFetch }: PropTypes) => {
   const [showActions, setShowActions] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const { _id } = useAppSelector((state) => state.auth);
+
+  const showEditForm = () => {
+    setShowForm(true);
+    setShowActions(false);
+  };
+
+  const likeAnswer = () => {
+    axiosAuth
+      .post("/answers/" + answer._id)
+      .then(() => onFetch())
+      .catch((error) => console.log(error));
+  };
+
+  const deleteAnswer = () => {
+    axiosAuth
+      .delete("/answers/" + answer._id)
+      .then(() => onFetch())
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div className="answer">
+      {showForm && (
+        <EditAnswer
+          answer={answer}
+          onFetch={onFetch}
+          onClose={() => setShowForm(false)}
+          closeModal={() => setShowForm(false)}
+        />
+      )}
       <div className="answer-header">
-        <Link to={"/profile/1"} className="user">
+        <Link to={"/profile/" + answer.user._id} className="user">
           <Avatar />
-          <span>John Doe</span>
+          <span>{answer.user.name}</span>
         </Link>
-        <div className="edit">
-          <span>Edited</span>
-          <div onClick={() => setShowActions((prev) => !prev)}>
-            <EllipsisVertical className="icon" />
+        {_id && answer.user._id === _id && (
+          <div className="edit">
+            <div onClick={() => setShowActions((prev) => !prev)}>
+              <EllipsisVertical className="icon" />
+            </div>
+            <div className={`user-actions ${showActions && "active"}`}>
+              <p onClick={showEditForm}>
+                edit
+                <PencilIcon className="icon" />
+              </p>
+              <p onClick={deleteAnswer}>
+                delete
+                <TrashIcon className="icon" />
+              </p>
+            </div>
           </div>
-          <div className={`user-actions ${showActions && "active"}`}>
-            <p onClick={onClick}>edit</p>
-            <p>delete</p>
-          </div>
-        </div>
+        )}
       </div>
       <div className="answer-body">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
-          soluta enim quam quia inventore necessitatibus asperiores a architecto
-          ab assumenda?
-        </p>
+        <p>{answer.text}</p>
 
-        <span className="time">August 24, 2023</span>
+        <span className="time">
+          {lightFormat(new Date(answer.createdAt), "yyyy-MMM-dd h:m a")}
+        </span>
       </div>
       <div className="answer-footer">
-        <div onClick={() => setIsLiked((prev) => !prev)}>
-          <LikeIcon className="icon" fill={isLiked ? "crimson" : "none"} />
+        <div onClick={likeAnswer}>
+          <LikeIcon
+            className="icon"
+            fill={_id && answer.likes.includes(_id) ? "crimson" : "none"}
+          />
         </div>
-        <span>43</span>
+        <span>{answer.likes.length}</span>
       </div>
     </div>
   );

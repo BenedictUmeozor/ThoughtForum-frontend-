@@ -16,6 +16,10 @@
     padding: 1.5rem 1rem;
     border-bottom: 0.15rem solid #ededed;
 
+    &:last-child {
+      border-bottom: 0;
+    }
+
     .question-header {
       .flex {
         display: flex;
@@ -26,10 +30,61 @@
           display: flex;
           align-items: center;
           column-gap: 0.25rem;
+          font-size: 0.98rem;
 
           span {
             font-weight: 450;
             color: $secondary-color;
+          }
+        }
+
+        .user-actions {
+          .ellipsis {
+            position: relative;
+
+            .icon {
+              cursor: pointer;
+            }
+
+            .ellipsis-content {
+              position: absolute;
+              top: 120%;
+              right: 0;
+              width: 100px;
+              background-color: #fff;
+              z-index: 3;
+              box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.1);
+              transform: scale(0);
+              transform-origin: top right;
+              transition: all 0.3s ease-in;
+
+              &.active {
+                transform: scale(1);
+              }
+
+              p {
+                padding: 0.6rem;
+                font-size: 0.95rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                column-gap: 0.3rem;
+
+                .icon {
+                  width: 1.2rem;
+                  color: #444;
+                }
+
+                &:not(:last-child) {
+                  border-bottom: 1px solid #f2f2f2;
+                }
+
+                &:hover {
+                  background-color: #f2f2f2;
+                }
+              }
+            }
           }
         }
       }
@@ -52,7 +107,7 @@
     .question-body {
       .title {
         margin-bottom: 0.5rem;
-        font-size: 1.15rem;
+        font-size: 1.08rem;
         font-weight: 500;
       }
 
@@ -61,8 +116,8 @@
       }
 
       .body {
-        color: #222;
-        font-size: 0.96rem;
+        color: #333;
+        font-size: 0.95rem;
         margin-bottom: 0.5rem;
       }
 
@@ -377,6 +432,8 @@ footer {
       display: flex;
       align-items: center;
       column-gap: 0.25rem;
+      font-size: 0.96rem;
+      font-weight: 500;
 
       span {
         color: $secondary-color;
@@ -411,6 +468,14 @@ footer {
           font-size: 0.95rem;
           cursor: pointer;
           transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          column-gap: 0.3rem;
+
+          .icon {
+            width: 1.2rem;
+            color: #444;
+          }
 
           &:not(:last-child) {
             border-bottom: 1px solid #f2f2f2;
@@ -468,34 +533,50 @@ footer {
 }
 
 .modal {
-  z-index: 5;
-  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  min-height: 100vh;
-  overflow-y: scroll;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 
   .modal-content {
     background-color: #fff;
     width: 90%;
     max-width: 500px;
-    margin: 2rem auto 1rem;
+    margin: auto;
     padding: 1rem;
     border-radius: 0.6rem;
+    overflow-y: scroll;
+    pointer-events: all;
 
     .close {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      margin-bottom: 1.1rem;
+      margin-bottom: 0;
 
       .icon {
         width: 2rem;
         color: crimson;
         cursor: pointer;
       }
+    }
+
+    .error {
+      text-align: center;
+      margin: 0.25rem 0;
+      font-size: 0.95rem;
+      color: crimson;
+      padding: 0.4rem;
+      border: 1.5px solid crimson;
+      border-radius: 0.15rem;
+      background-color: lighten($color: crimson, $amount: 50);
     }
 
     .main-title {
@@ -540,5 +621,40 @@ footer {
         }
       }
     }
+  }
+}
+
+.no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  margin: 2rem auto;
+  border-radius: 0.3rem;
+
+  &.no-answers {
+    background-color: #fff;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: #444;
+  }
+}
+
+.load-data {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3rem;
+
+  &.questions-load {
+    background-color: #fff;
+  }
+
+  &.answers-load {
+    background-color: #fff;
+    margin: 1.5rem 0;
   }
 }

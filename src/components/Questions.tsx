@@ -1,12 +1,18 @@
+import { useAppSelector } from "../hooks/hooks";
 import Question from "./Question";
 
-const Questions = () => {
+type Props = {
+  onFetch: Function;
+};
+
+const Questions = ({ onFetch }: Props) => {
+  const questions = useAppSelector((state) => state.questions);
+
   return (
     <div className="questions">
-      <Question />
-      <Question />
-      <Question />
-      <Question />
+      {questions.map((question) => (
+        <Question key={question._id} question={question} onFetch={onFetch} />
+      ))}
     </div>
   );
 };

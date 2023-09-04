@@ -1,14 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store/store";
+import { AuthState } from "../helpers/interfaces";
 
-interface State {
-  _id: string | null;
-  accessToken: string | null;
-  refreshToken: string | null;
-}
 
-const initialState: State = {
+
+const initialState: AuthState = {
   _id: JSON.parse(localStorage.getItem("_id")!) || null,
   accessToken: JSON.parse(localStorage.getItem("accessToken")!) || null,
   refreshToken: JSON.parse(localStorage.getItem("refreshToken")!) || null,
@@ -18,7 +15,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials(state, action: PayloadAction<State>) {
+    setCredentials(state, action: PayloadAction<AuthState>) {
       localStorage.setItem(
         "accessToken",
         JSON.stringify(action.payload.accessToken)
