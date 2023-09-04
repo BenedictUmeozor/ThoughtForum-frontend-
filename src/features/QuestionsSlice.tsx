@@ -10,7 +10,8 @@ const questionSlice = createSlice({
   initialState,
   reducers: {
     setQuestions(state, action: PayloadAction<State>) {
-      return (state = action.payload);
+      state.length = 0;
+      state.push(...action.payload);
     },
   },
 });

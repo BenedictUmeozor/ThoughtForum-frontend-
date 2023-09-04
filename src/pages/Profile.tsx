@@ -2,9 +2,9 @@ import male from "../assets/images/man.png";
 import { PencilIcon } from "../assets/icons";
 import UserQuestion from "../components/UserQuestion";
 import { useState } from "react";
-import UsersModal from "../components/UsersModal";
-import EditModal from "../components/EditModal";
-import EditQuestionForm from "../components/EditQuestionForm";
+// import UsersModal from "../components/UsersModal";
+// import EditModal from "../components/EditModal";
+// import EditQuestionForm from "../components/EditQuestionForm";
 import ProtectedLayout from "../layouts/ProtectedLayout";
 //import female from '../assets/images/woman.png'
 
@@ -31,11 +31,11 @@ const Profile = () => {
   return (
     <section className="profile">
       <ProtectedLayout>
-        {showModal && (
+        {/* {showModal && (
           <UsersModal title={modalTitle} onClose={() => setShowModal(false)} />
         )}
         {showEditModal && <EditModal onClose={() => setShowEditModal(false)} />}
-        {showForm && <EditQuestionForm onClose={() => setShowForm(false)} />}
+        {showForm && <EditQuestionForm onClose={() => setShowForm(false)} />} */}
         <div className="container">
           <h2>My Profile</h2>
           <div className="user">

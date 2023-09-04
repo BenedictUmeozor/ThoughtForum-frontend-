@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import HotQuestions from "../components/HotQuestions";
-import Question from "../components/Question";
+//import Question from "../components/Question";
 import TopMembers from "../components/TopMembers";
 
 const CategoriesPage = () => {
@@ -36,10 +36,13 @@ const CategoriesPage = () => {
             <p>Technology</p>
           </div>
           <div className="questions">
+            {/* <Question />
             <Question />
             <Question />
-            <Question />
-            <Question />
+            <Question /> */}
+            <div className="no-data">
+              <p>No data yet</p>
+            </div>
           </div>
         </div>
         <div className="right-col">
