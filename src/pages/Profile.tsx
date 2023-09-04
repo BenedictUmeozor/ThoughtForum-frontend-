@@ -1,7 +1,7 @@
 import male from "../assets/images/man.png";
-import { PencilIcon } from "../assets/icons";
-import UserQuestion from "../components/UserQuestion";
-import { useState } from "react";
+//import { PencilIcon } from "../assets/icons";
+//import UserQuestion from "../components/UserQuestion";
+//import { useState } from "react";
 // import UsersModal from "../components/UsersModal";
 // import EditModal from "../components/EditModal";
 // import EditQuestionForm from "../components/EditQuestionForm";
@@ -9,24 +9,24 @@ import ProtectedLayout from "../layouts/ProtectedLayout";
 //import female from '../assets/images/woman.png'
 
 const Profile = () => {
-  const [modalTitle, setModalTitle] = useState("Followers");
-  const [showModal, setShowModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  // const [modalTitle, setModalTitle] = useState("Followers");
+  // const [showModal, setShowModal] = useState(false);
+  // const [showEditModal, setShowEditModal] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
 
-  const showEditProfileModal = () => {
-    setShowEditModal(true);
-  };
+  // const showEditProfileModal = () => {
+  //   setShowEditModal(true);
+  // };
 
-  const showFollowers = () => {
-    setModalTitle("Followers");
-    setShowModal(true);
-  };
+  // const showFollowers = () => {
+  //   setModalTitle("Followers");
+  //   setShowModal(true);
+  // };
 
-  const showFollowing = () => {
-    setModalTitle("Following");
-    setShowModal(true);
-  };
+  // const showFollowing = () => {
+  //   setModalTitle("Following");
+  //   setShowModal(true);
+  // };
 
   return (
     <section className="profile">
@@ -43,18 +43,18 @@ const Profile = () => {
               <div className="user-avatar">
                 <img src={male} alt="user" />
               </div>
-              <button className="edit-btn" onClick={showEditProfileModal}>
+              {/* <button className="edit-btn" onClick={showEditProfileModal}>
                 Edit <PencilIcon className="icon" />
-              </button>
+              </button> */}
             </div>
             <div className="follow">
               <div>
-                <p onClick={showFollowing}>
+                <p>
                   13 <span>following</span>
                 </p>
               </div>
               <div>
-                <p onClick={showFollowers}>
+                <p>
                   130 <span>followers</span>
                 </p>
               </div>
@@ -85,9 +85,9 @@ const Profile = () => {
           <div className="user-questions">
             <h3>Questions</h3>
             <div className="list">
+              {/* <UserQuestion onClick={() => setShowForm(true)} />
               <UserQuestion onClick={() => setShowForm(true)} />
-              <UserQuestion onClick={() => setShowForm(true)} />
-              <UserQuestion onClick={() => setShowForm(true)} />
+              <UserQuestion onClick={() => setShowForm(true)} /> */}
             </div>
           </div>
         </div>
