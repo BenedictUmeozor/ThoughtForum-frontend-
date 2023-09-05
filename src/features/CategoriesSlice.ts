@@ -1,13 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { CategoryInterface } from "../helpers/interfaces";
 
-interface Category {
-  _id: string;
-  title: string;
-  question: string[];
-}
-
-type State = Category[];
+type State = CategoryInterface[];
 
 const initialState: State = [];
 

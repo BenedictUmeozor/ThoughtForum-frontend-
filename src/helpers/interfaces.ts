@@ -66,3 +66,9 @@ export interface FollowUser {
   followers: string[];
   following: string[];
 }
+
+export interface CategoryInterface {
+  _id: string;
+  title: string;
+  question: string[];
+}

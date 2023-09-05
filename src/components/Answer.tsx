@@ -22,6 +22,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
   const [showActions, setShowActions] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
 
   const showEditForm = () => {
     setShowForm(true);
@@ -29,17 +30,21 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
   };
 
   const likeAnswer = () => {
+    setLoading(true);
     axiosAuth
       .post("/answers/" + answer._id)
       .then(() => onFetch())
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
 
   const deleteAnswer = () => {
+    setLoading(true);
     axiosAuth
       .delete("/answers/" + answer._id)
       .then(() => onFetch())
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -67,7 +72,10 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
                 edit
                 <PencilIcon className="icon" />
               </p>
-              <p onClick={deleteAnswer}>
+              <p
+                className={loading ? "pointer-events" : ""}
+                onClick={deleteAnswer}
+              >
                 delete
                 <TrashIcon className="icon" />
               </p>
@@ -83,7 +91,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
         </span>
       </div>
       <div className="answer-footer">
-        <div onClick={likeAnswer}>
+        <div className={loading ? "pointer-events" : ""} onClick={likeAnswer}>
           <LikeIcon
             className="icon"
             fill={_id && answer.likes.includes(_id) ? "crimson" : "none"}

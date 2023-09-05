@@ -2,9 +2,33 @@ import { Link } from "react-router-dom";
 import { QuestionIcon } from "../assets/icons";
 import Avatar from "./Avatar";
 import { useState } from "react";
+import { axiosAuth } from "../axios/axios";
+import { useAppSelector } from "../hooks/hooks";
 
-const User = () => {
-  const [isFollowing, setIsFollowing] = useState(false);
+interface UserInterface {
+  _id: string;
+  name: string;
+  followers: string[];
+  questions: string[];
+}
+
+type PropTypes = {
+  user: UserInterface;
+  onFetch: Function;
+};
+
+const User = ({ user, onFetch }: PropTypes) => {
+  const { _id } = useAppSelector((state) => state.auth);
+  const [loading, setLoading] = useState(false);
+
+  const followUser = () => {
+    setLoading(true);
+    axiosAuth
+      .post("/users/" + user._id)
+      .then(() => onFetch())
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
+  };
 
   return (
     <div className="user">
@@ -13,22 +37,27 @@ const User = () => {
       </div>
       <div className="right">
         <div className="flex-between">
-          <Link to={"/profile/1"} className="name">
-            Benedict Umeozor
+          <Link to={"/profile/" + user._id} className="name">
+            {user.name}
           </Link>
-          {isFollowing ? (
-            <button className="following" onClick={() => setIsFollowing(false)}>
-              following
-            </button>
-          ) : (
-            <button className="follow" onClick={() => setIsFollowing(true)}>
-              follow
-            </button>
-          )}
+          {_id &&
+            _id !== user._id &&
+            (user.followers.includes(_id) ? (
+              <button disabled={loading} className="following" onClick={followUser}>
+                following
+              </button>
+            ) : (
+              <button disabled={loading} className="follow" onClick={followUser}>
+                follow
+              </button>
+            ))}
         </div>
         <div className="questions">
           <QuestionIcon className="icon" />
-          <span>50 questions</span>
+          <span>
+            {user.questions.length}{" "}
+            {user.questions.length === 1 ? "question" : "questions"}
+          </span>
         </div>
       </div>
     </div>

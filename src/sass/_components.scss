@@ -84,6 +84,29 @@
                   background-color: #f2f2f2;
                 }
               }
+
+              p {
+                padding: 0.6rem;
+                font-size: 0.95rem;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                column-gap: 0.3rem;
+
+                .icon {
+                  width: 1.2rem;
+                  color: #444;
+                }
+
+                &:not(:last-child) {
+                  border-bottom: 1px solid #f2f2f2;
+                }
+
+                &:hover {
+                  background-color: #f2f2f2;
+                }
+              }
             }
           }
         }
@@ -191,7 +214,6 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
     .question {
-      padding: 1rem;
       border-bottom: 0.15rem solid #ededed;
 
       .question-header {
@@ -199,6 +221,8 @@
         align-items: center;
         column-gap: 0.3rem;
         margin: 0;
+        border-bottom: 1px solid #eee;
+        padding: 1rem;
 
         span {
           font-size: 0.97rem;
@@ -207,8 +231,10 @@
       }
 
       .question-body {
+        padding: 0.5rem 1rem;
+
         a {
-          font-size: 1.05rem;
+          font-size: 1rem;
           margin: 0.5rem 0 0.7rem;
           font-weight: 600;
 
@@ -223,14 +249,15 @@
         display: flex;
         align-items: center;
         column-gap: 0.25rem;
+        padding: 0.5rem 1rem;
+        padding-bottom: 1rem;
 
         .icon {
-          width: 1.3rem;
-          color: $primary-color;
+          width: 1.2rem;
         }
 
         span {
-          font-size: 0.95rem;
+          font-size: 0.9rem;
         }
       }
     }
@@ -309,7 +336,7 @@ footer {
         flex: 1;
 
         h1 {
-          font-size: 1.5rem;
+          font-size: 1.3rem;
           font-weight: 700;
           color: #fefefe;
 
@@ -373,6 +400,12 @@ footer {
       margin-top: 0.3rem;
       font-size: 0.8rem;
       color: #555;
+    }
+
+    .text {
+      margin: 0.3rem 0;
+      font-size: 0.96rem;
+      color: #333;
     }
   }
 

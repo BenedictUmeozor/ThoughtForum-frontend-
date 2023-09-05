@@ -3,7 +3,7 @@ import male from "../assets/images/man.png";
 import UserQuestion from "../components/UserQuestion";
 import UsersModal from "../components/UsersModal";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserProfileInterface } from "../helpers/interfaces";
+import { QuestionInterface, UserProfileInterface } from "../helpers/interfaces";
 import { axiosAuth, axiosInstance } from "../axios/axios";
 import { CircularProgress } from "@mui/material";
 import { useAppSelector } from "../hooks/hooks";
@@ -14,6 +14,7 @@ const UserProfile = () => {
   const [modalTitle, setModalTitle] = useState("Followers");
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<UserProfileInterface | null>(null);
+  const [questions, setQuestions] = useState<QuestionInterface[] | null>(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const { _id } = useAppSelector((state) => state.auth);
@@ -44,6 +45,23 @@ const UserProfile = () => {
       .catch((error) => console.log(error));
   };
 
+  const getUserQuestions = async () => {
+    if (user?.questions) {
+      const questionPromises = user.questions.map(async (question) => {
+        const response = await axiosInstance.get("/questions/" + question);
+        return response.data;
+      });
+
+      const questions = await Promise.all(questionPromises);
+      setQuestions(questions);
+
+      return questions;
+    }
+
+    setQuestions([]);
+    return [];
+  };
+
   useEffect(() => {
     id && getUser();
   }, [id]);
@@ -51,7 +69,9 @@ const UserProfile = () => {
   useEffect(() => {
     if (user && user._id === _id) {
       navigate("/profile");
+      return;
     }
+    getUserQuestions();
   }, [user]);
 
   return (
@@ -72,7 +92,10 @@ const UserProfile = () => {
             <>
               <div className="flex">
                 <div className="user-avatar">
-                  <img src={user.gender === "male" ? male : female} alt="user" />
+                  <img
+                    src={user.gender === "male" ? male : female}
+                    alt="user"
+                  />
                 </div>
                 {_id && user.followers.includes(_id) ? (
                   <button className="following" onClick={followUser}>
@@ -137,11 +160,27 @@ const UserProfile = () => {
 
         <div className="user-questions">
           <h3>Questions</h3>
-          <div className="list">
-            <UserQuestion />
-            <UserQuestion />
-            <UserQuestion />
-          </div>
+          {questions ? (
+            questions.length > 0 ? (
+              <div className="list">
+                {questions.map((question) => (
+                  <UserQuestion
+                    key={question._id}
+                    question={question}
+                    onFetch={getUserQuestions}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="no-data">
+                <p>No questions to show</p>
+              </div>
+            )
+          ) : (
+            <div className="load-data">
+              <CircularProgress size={"1rem"} />
+            </div>
+          )}
         </div>
       </div>
     </section>

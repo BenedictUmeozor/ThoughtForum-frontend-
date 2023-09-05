@@ -18,10 +18,12 @@ import { QuestionInterface } from "../helpers/interfaces";
 type QuestionProps = {
   question: QuestionInterface;
   onFetch: Function;
+  onLike?: Function;
 };
 
-const Question = ({ question, onFetch }: QuestionProps) => {
+const Question = ({ question, onFetch, onLike }: QuestionProps) => {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -32,20 +34,29 @@ const Question = ({ question, onFetch }: QuestionProps) => {
   };
 
   const likeQuestion = async () => {
+    setLoading(true);
     try {
       const { data } = await axiosAuth.post("/questions/like/" + question._id);
       dispatch(setQuestions(data));
+      if (onLike) {
+        onLike();
+      }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const deleteQuestion = async () => {
+    setLoading(true);
     try {
       const { data } = await axiosAuth.delete("/questions/" + question._id);
       dispatch(setQuestions(data));
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,7 +88,11 @@ const Question = ({ question, onFetch }: QuestionProps) => {
                       Edit
                       <PencilIcon className="icon edit-icon" />
                     </p>
-                    <p onClick={deleteQuestion}>
+
+                    <p
+                      onClick={deleteQuestion}
+                      className={loading ? "pointer-events" : ""}
+                    >
                       Delete
                       <TrashIcon className="icon trash-icon" />
                     </p>
@@ -107,15 +122,15 @@ const Question = ({ question, onFetch }: QuestionProps) => {
       <div className="question-footer">
         <div className="question-info">
           <div className="likes action">
-            <div onClick={likeQuestion}>
+            <button disabled={loading} onClick={likeQuestion}>
               <LikeIcon
                 className="icon like-icon"
                 fill={_id && question.likes.includes(_id) ? "crimson" : "none"}
               />
-            </div>
+            </button>
             <span>{question.likes.length}</span>
           </div>
-          <Link to={"/question/1"} className="answers action">
+          <Link to={"/question/" + question._id} className="answers action">
             <AnswerIcon className="icon answer-icon" />
             <span>{question.answers.length}</span>
           </Link>

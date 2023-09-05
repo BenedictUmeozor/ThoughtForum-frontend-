@@ -6,6 +6,7 @@ import { useAppSelector } from "../hooks/hooks";
 const Header = () => {
   const [showNav, setShowNav] = useState(false);
   const { refreshToken } = useAppSelector((state) => state.auth);
+  const categories = useAppSelector((state) => state.categories);
 
   return (
     <header>
@@ -19,7 +20,9 @@ const Header = () => {
         <div className="right-col">
           <nav className="desktop-nav">
             <NavLink to={"/"}>Questions</NavLink>
-            <NavLink to={"/categories"}>Categories</NavLink>
+            <NavLink to={"/categories/" + categories[0]?._id}>
+              Categories
+            </NavLink>
             {refreshToken ? (
               <>
                 <NavLink to={"/profile"}>Profile</NavLink>
@@ -39,7 +42,10 @@ const Header = () => {
             <NavLink to={"/"} onClick={() => setShowNav(false)}>
               Questions
             </NavLink>
-            <NavLink to={"/categories"} onClick={() => setShowNav(false)}>
+            <NavLink
+              to={"/categories/" + categories[0]?._id}
+              onClick={() => setShowNav(false)}
+            >
               Categories
             </NavLink>
             {refreshToken ? (
