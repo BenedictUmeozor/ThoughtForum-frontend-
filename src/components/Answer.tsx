@@ -9,9 +9,10 @@ import {
 import { useState } from "react";
 import { AnswerInterface } from "../helpers/interfaces";
 import { lightFormat } from "date-fns";
-import { useAppSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import EditAnswer from "./EditAnswer";
 import { axiosAuth } from "../axios/axios";
+import { setSuccess } from "../features/SnackbarSlice";
 
 type PropTypes = {
   answer: AnswerInterface;
@@ -23,6 +24,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
   const [showForm, setShowForm] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const showEditForm = () => {
     setShowForm(true);
@@ -43,6 +45,14 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
     axiosAuth
       .delete("/answers/" + answer._id)
       .then(() => onFetch())
+      .then(() =>
+        dispatch(
+          setSuccess({
+            show: true,
+            message: `Answer deleted successfully`,
+          })
+        )
+      )
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   };

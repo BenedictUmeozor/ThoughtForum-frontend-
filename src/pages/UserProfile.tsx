@@ -6,9 +6,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { QuestionInterface, UserProfileInterface } from "../helpers/interfaces";
 import { axiosAuth, axiosInstance } from "../axios/axios";
 import { CircularProgress } from "@mui/material";
-import { useAppSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import female from "../assets/images/woman.png";
 import { lightFormat } from "date-fns";
+import { setSuccess } from "../features/SnackbarSlice";
 
 const UserProfile = () => {
   const [modalTitle, setModalTitle] = useState("Followers");
@@ -18,6 +19,7 @@ const UserProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { _id } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   const showFollowers = () => {
     setModalTitle("Followers");
@@ -42,6 +44,16 @@ const UserProfile = () => {
     axiosAuth
       .post("/users/" + user?._id)
       .then(() => getUser())
+      .then(() =>
+        dispatch(
+          setSuccess({
+            show: true,
+            message: !user?.followers.includes(_id!)
+              ? `Succesfully unfollowed ${user?.name}`
+              : `You are now following ${user?.name}`,
+          })
+        )
+      )
       .catch((error) => console.log(error));
   };
 

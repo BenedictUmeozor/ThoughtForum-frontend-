@@ -5,6 +5,7 @@ import ProtectedLayout from "../layouts/ProtectedLayout";
 import { axiosAuth } from "../axios/axios";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
+import { setSuccess } from "../features/SnackbarSlice";
 
 const Logout = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,9 @@ const Logout = () => {
       .post("/auth/logout", { token: refreshToken })
       .then(() => {
         dispatch(deleteCredentials());
+        dispatch(
+          setSuccess({ show: true, message: "Logged out successfully" })
+        );
       })
       .catch((error) => {
         console.log(error);

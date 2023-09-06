@@ -12,6 +12,7 @@ import { CircularProgress } from "@mui/material";
 import { lightFormat } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { AnswerInterface, QuestionInterface } from "../helpers/interfaces";
+import { setSuccess } from "../features/SnackbarSlice";
 
 const QuestionPage = () => {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -54,6 +55,14 @@ const QuestionPage = () => {
     axiosAuth
       .post("/users/" + question?.user._id)
       .then(() => getQuestion())
+      .then(() => {
+        dispatch(
+          setSuccess({
+            show: true,
+            message: `You are now following ${question?.user.name}`,
+          })
+        );
+      })
       .catch((error) => console.log(error));
   };
 

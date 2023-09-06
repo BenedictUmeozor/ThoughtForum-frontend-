@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import AuthSlice from "../features/AuthSlice";
 import CategoriesSlice from "../features/CategoriesSlice";
 import QuestionsSlice from "../features/QuestionsSlice";
+import SnackbarSlice from "../features/SnackbarSlice";
 
 const store = configureStore({
   reducer: {
     auth: AuthSlice,
     categories: CategoriesSlice,
-    questions: QuestionsSlice
+    questions: QuestionsSlice,
+    snackbar: SnackbarSlice,
   },
 });
 

@@ -1,9 +1,10 @@
 import Avatar from "./Avatar";
 import { FollowUser as userInterface } from "../helpers/interfaces";
 import { axiosAuth } from "../axios/axios";
-import { useAppSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { setSuccess } from "../features/SnackbarSlice";
 
 type Props = {
   user: userInterface;
@@ -15,11 +16,23 @@ type Props = {
 const FollowUser = ({ user, onFetch, title, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
   const followUser = () => {
     setLoading(true);
     axiosAuth
       .post("/users/" + user._id)
       .then(() => onFetch())
+      .then(() =>
+        dispatch(
+          setSuccess({
+            show: true,
+            message: !user?.followers.includes(_id!)
+              ? `Succesfully unfollowed ${user?.name}`
+              : `You are now following ${user?.name}`,
+          })
+        )
+      )
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   };

@@ -3,6 +3,8 @@ import { XIcon } from "../assets/icons";
 import { CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import { axiosAuth } from "../axios/axios";
+import { setSuccess } from "../features/SnackbarSlice";
+import { useAppDispatch } from "../hooks/hooks";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -25,6 +27,7 @@ const AddAnswerForm = ({
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,6 +45,12 @@ const AddAnswerForm = ({
       .then(() => {
         closeModal();
         onFetch();
+        dispatch(
+          setSuccess({
+            show: true,
+            message: `Answer created successfully`,
+          })
+        );
       })
       .catch((error) => {
         const axiosError = error as AxiosError;

@@ -4,6 +4,8 @@ import { UserProfileInterface } from "../helpers/interfaces";
 import { CircularProgress } from "@mui/material";
 import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
+import { setSuccess } from "../features/SnackbarSlice";
+import { useAppDispatch } from "../hooks/hooks";
 
 type PropTypes = {
   onClose?: (event: MouseEvent) => void;
@@ -18,6 +20,7 @@ const EditModal = ({ onClose, closeModal, onFetch, user }: PropTypes) => {
   const [name, setName] = useState(user.name);
   const [gender, setGender] = useState(user.gender);
   const [bio, setBio] = useState(user.bio);
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +34,12 @@ const EditModal = ({ onClose, closeModal, onFetch, user }: PropTypes) => {
       });
       closeModal();
       onFetch();
+      dispatch(
+        setSuccess({
+          show: true,
+          message: `Profile updated successfully`,
+        })
+      );
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response) {

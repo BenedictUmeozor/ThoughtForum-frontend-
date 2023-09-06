@@ -5,13 +5,35 @@ import { Outlet } from "react-router-dom";
 import Loader from "../components/Loader";
 import { axiosAuth, axiosInstance } from "../axios/axios";
 import { AxiosError } from "axios";
-import { useAppDispatch } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { setCategories } from "../features/CategoriesSlice";
 import jwt_decode from "jwt-decode";
 import { setCredentials } from "../features/AuthSlice";
+import {
+  SnackbarError,
+  SnackbarInfo,
+  SnackbarSuccess,
+  SnackbarWarning,
+} from "../components/Snackbar";
+import {
+  setError,
+  setInfo,
+  setSuccess,
+  setWarning,
+} from "../features/SnackbarSlice";
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();
+  const {
+    success,
+    successMessage,
+    error,
+    errorMessage,
+    info,
+    infoMessage,
+    warning,
+    warningMessage,
+  } = useAppSelector((state) => state.snackbar);
 
   const refresh = async (refreshToken: string) => {
     try {
@@ -71,15 +93,49 @@ const RootLayout = () => {
     getCategories();
   }, []);
 
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        dispatch(setSuccess({ show: false, message: "" }));
+      }, 3500);
+    }
+
+    if (error) {
+      setTimeout(() => {
+        dispatch(setError({ show: false, message: "" }));
+      }, 3500);
+    }
+
+    if (info) {
+      setTimeout(() => {
+        dispatch(setInfo({ show: false, message: "" }));
+      }, 3500);
+    }
+
+    if (warning) {
+      setTimeout(() => {
+        dispatch(setWarning({ show: false, message: "" }));
+      }, 3500);
+    }
+  }, [success, info, warning, error]);
+
   return (
     <main className="main">
       <div>
         <Header />
       </div>
       <section>
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
+        <div>
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+          <div className="container">
+            {success && <SnackbarSuccess message={successMessage} />}
+            {error && <SnackbarError message={errorMessage} />}
+            {info && <SnackbarInfo message={infoMessage} />}
+            {warning && <SnackbarWarning message={warningMessage} />}
+          </div>
+        </div>
       </section>
       <div>
         <Footer />

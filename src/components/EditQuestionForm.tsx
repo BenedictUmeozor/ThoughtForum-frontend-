@@ -1,25 +1,32 @@
 import { MouseEvent, useState, FormEvent } from "react";
 import { XIcon } from "../assets/icons";
 import { QuestionInterface } from "../helpers/interfaces";
-import { useAppSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { CircularProgress } from "@mui/material";
 import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
+import { setSuccess } from "../features/SnackbarSlice";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
   closeModal: Function;
   question: QuestionInterface;
-  onFetch: Function
+  onFetch: Function;
 };
 
-const EditQuestionForm = ({ onClose, closeModal, question, onFetch }: PropTypes) => {
+const EditQuestionForm = ({
+  onClose,
+  closeModal,
+  question,
+  onFetch,
+}: PropTypes) => {
   const categories = useAppSelector((state) => state.categories);
   const [title, setTitle] = useState(question.title);
   const [body, setBody] = useState(question.body);
   const [category, setCategory] = useState(question.category._id);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,6 +44,12 @@ const EditQuestionForm = ({ onClose, closeModal, question, onFetch }: PropTypes)
       .then(() => {
         closeModal();
         onFetch();
+        dispatch(
+          setSuccess({
+            show: true,
+            message: `Question updated successfully`,
+          })
+        );
       })
       .catch((error) => {
         const axiosError = error as AxiosError;

@@ -5,20 +5,21 @@ import { useState, FormEvent } from "react";
 import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
 import { CircularProgress } from "@mui/material";
+import { setSuccess } from "../features/SnackbarSlice";
+import { useAppDispatch } from "../hooks/hooks";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
   answer: AnswerInterface;
   onFetch: Function;
-  closeModal: Function
+  closeModal: Function;
 };
-
-
 
 const EditAnswer = ({ onClose, answer, onFetch, closeModal }: PropTypes) => {
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,10 +27,16 @@ const EditAnswer = ({ onClose, answer, onFetch, closeModal }: PropTypes) => {
     setError(null);
 
     axiosAuth
-      .put("/answers/" + answer._id, {text: body})
+      .put("/answers/" + answer._id, { text: body })
       .then(() => {
         closeModal();
         onFetch();
+        dispatch(
+          setSuccess({
+            show: true,
+            message: `Answer updated successfully`,
+          })
+        );
       })
       .catch((error) => {
         const axiosError = error as AxiosError;
@@ -60,7 +67,7 @@ const EditAnswer = ({ onClose, answer, onFetch, closeModal }: PropTypes) => {
               rows={8}
               defaultValue={answer.text}
               placeholder="Edit this answer"
-              onChange={e => setBody(e.target.value)}
+              onChange={(e) => setBody(e.target.value)}
             ></textarea>
           </div>
           <button disabled={loading} type="submit">

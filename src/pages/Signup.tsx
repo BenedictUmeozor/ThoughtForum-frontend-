@@ -6,6 +6,7 @@ import { CircularProgress } from "@mui/material";
 import UnProtectedLayout from "../layouts/UnProtectedLayout";
 import { setCredentials } from "../features/AuthSlice";
 import { useAppDispatch } from "../hooks/hooks";
+import { setSuccess } from "../features/SnackbarSlice";
 // import { useDispatch } from "react-redux";
 
 interface FormData {
@@ -38,6 +39,7 @@ const Signup = () => {
     try {
       const { data } = await axiosInstance.post("/auth", payload);
       dispatch(setCredentials(data));
+      dispatch(setSuccess({ show: true, message: "Logged in successfully" }));
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response) {

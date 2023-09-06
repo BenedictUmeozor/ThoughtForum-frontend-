@@ -9,6 +9,9 @@ import { setQuestions } from "../features/QuestionsSlice";
 
 const Home = () => {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [answersCount, setAnswersCount] = useState<{
+    answersCount: number;
+  } | null>(null);
   const questions = useAppSelector((state) => state.questions);
   const dispatch = useAppDispatch();
 
@@ -21,13 +24,29 @@ const Home = () => {
     }
   };
 
+  const getAnswersCount = async () => {
+    try {
+      const { data } = await axiosInstance.get("/answers");
+      setAnswersCount(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getQuestions();
+    getAnswersCount();
   }, []);
 
   return (
     <section className="home">
-      {showAddForm && <AddQuestionForm onClose={() => setShowAddForm(false)} closeModal={() => setShowAddForm(false)} onFetch={getQuestions} />}
+      {showAddForm && (
+        <AddQuestionForm
+          onClose={() => setShowAddForm(false)}
+          closeModal={() => setShowAddForm(false)}
+          onFetch={getQuestions}
+        />
+      )}
       <div className="container">
         <div className="left-col">
           <div className="question-box">
@@ -40,7 +59,7 @@ const Home = () => {
             </div>
             <div className="answer-stats">
               <h4>Answers</h4>
-              <p>773</p>
+              <p>{answersCount?.answersCount}</p>
             </div>
           </div>
           <div className="nav">
@@ -69,7 +88,7 @@ const Home = () => {
               </div>
               <div className="answer-stats">
                 <h4>Answers</h4>
-                <p>773</p>
+                <p>{answersCount?.answersCount}</p>
               </div>
             </div>
             <HotQuestions />

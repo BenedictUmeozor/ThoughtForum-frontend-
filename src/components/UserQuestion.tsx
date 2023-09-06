@@ -4,8 +4,9 @@ import { useState } from "react";
 import EditQuestionForm from "./EditQuestionForm";
 import { QuestionInterface } from "../helpers/interfaces";
 import { lightFormat } from "date-fns";
-import { useAppSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { axiosAuth } from "../axios/axios";
+import { setSuccess } from "../features/SnackbarSlice";
 
 type PropTypes = {
   question: QuestionInterface;
@@ -16,12 +17,16 @@ const UserQuestion = ({ question, onFetch }: PropTypes) => {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   const deleteQuestion = async () => {
     setLoading(true);
     try {
       await axiosAuth.delete("/questions/" + question._id);
       onFetch();
+      dispatch(
+        setSuccess({ show: true, message: "Question deleted successfully" })
+      );
     } catch (error) {
       console.log(error);
     } finally {

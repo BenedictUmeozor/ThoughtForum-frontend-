@@ -72,3 +72,14 @@ export interface CategoryInterface {
   title: string;
   question: string[];
 }
+
+export interface SnackbarInterface {
+  success: boolean;
+  successMessage: string;
+  error: boolean;
+  errorMessage: string;
+  info: boolean;
+  infoMessage: string;
+  warning: boolean;
+  warningMessage: string;
+}

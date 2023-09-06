@@ -1,9 +1,10 @@
 import { FormEvent, MouseEvent, useState, useEffect } from "react";
 import { XIcon } from "../assets/icons";
-import { useAppSelector } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { CircularProgress } from "@mui/material";
 import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
+import { setSuccess } from "../features/SnackbarSlice";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -29,6 +30,7 @@ const AddQuestionForm = ({ onClose, closeModal, onFetch }: PropTypes) => {
   const [body, setBody] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
   const categories: Category[] =
     useAppSelector((state) => state.categories) || [];
 
@@ -41,13 +43,18 @@ const AddQuestionForm = ({ onClose, closeModal, onFetch }: PropTypes) => {
       category,
       body,
     };
-    console.log(payload);
 
     axiosAuth
       .post("/questions", payload)
       .then(() => {
         closeModal();
         onFetch();
+        dispatch(
+          setSuccess({
+            show: true,
+            message: `Question created successfully`,
+          })
+        );
       })
       .catch((error) => {
         const axiosError = error as AxiosError;

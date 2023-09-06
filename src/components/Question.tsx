@@ -14,6 +14,7 @@ import EditQuestionForm from "./EditQuestionForm";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { axiosAuth } from "../axios/axios";
 import { QuestionInterface } from "../helpers/interfaces";
+import { setSuccess } from "../features/SnackbarSlice";
 
 type QuestionProps = {
   question: QuestionInterface;
@@ -53,6 +54,9 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
     try {
       const { data } = await axiosAuth.delete("/questions/" + question._id);
       dispatch(setQuestions(data));
+      dispatch(
+        setSuccess({ show: true, message: "Question deleted successfully" })
+      );
     } catch (error) {
       console.log(error);
     } finally {

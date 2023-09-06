@@ -6,6 +6,7 @@ import { axiosInstance } from "../axios/axios";
 import { useAppDispatch } from "../hooks/hooks";
 import { setCredentials } from "../features/AuthSlice";
 import { AxiosError } from "axios";
+import { setSuccess } from "../features/SnackbarSlice";
 
 interface FormData {
   email: string;
@@ -31,6 +32,7 @@ const Signin = () => {
     try {
       const { data } = await axiosInstance.post("/auth/login", payload);
       dispatch(setCredentials(data));
+      dispatch(setSuccess({ show: true, message: "Logged in successfully" }));
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response) {
