@@ -3,11 +3,12 @@ import HotQuestions from "../components/HotQuestions";
 import TopMembers from "../components/TopMembers";
 import { useState, useEffect } from "react";
 import AddQuestionForm from "../components/AddQuestionForm";
-import { axiosInstance } from "../axios/axios";
+import { axiosAuth, axiosInstance } from "../axios/axios";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { setQuestions } from "../features/QuestionsSlice";
 
 const Home = () => {
+  const fetchBtns = document.querySelectorAll(".fetch-btn");
   const [showAddForm, setShowAddForm] = useState(false);
   const [answersCount, setAnswersCount] = useState<{
     answersCount: number;
@@ -24,6 +25,24 @@ const Home = () => {
     }
   };
 
+  const getTopQuestions = async () => {
+    try {
+      const { data } = await axiosInstance.get("/questions/top-questions");
+      dispatch(setQuestions(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getFollowingQuestions = async () => {
+    try {
+      const { data } = await axiosAuth.get("/questions/following-questions");
+      dispatch(setQuestions(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getAnswersCount = async () => {
     try {
       const { data } = await axiosInstance.get("/answers");
@@ -32,6 +51,15 @@ const Home = () => {
       console.log(error);
     }
   };
+
+  fetchBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      for (let i = 0; i < fetchBtns.length; i++) {
+        fetchBtns[i].classList.remove("active");
+      }
+      btn.classList.add("active");
+    });
+  });
 
   useEffect(() => {
     getQuestions();
@@ -59,13 +87,19 @@ const Home = () => {
             </div>
             <div className="answer-stats">
               <h4>Answers</h4>
-              <p>{answersCount?.answersCount}</p>
+              <p>{answersCount?.answersCount || 0}</p>
             </div>
           </div>
           <div className="nav">
-            <button className="active">Recent questions</button>
-            <button>Top questions</button>
-            <button>Following</button>
+            <button className="fetch-btn active" onClick={getQuestions}>
+              Recent questions
+            </button>
+            <button className="fetch-btn" onClick={getTopQuestions}>
+              Top questions
+            </button>
+            <button className="fetch-btn" onClick={getFollowingQuestions}>
+              Following
+            </button>
           </div>
 
           {questions.length > 0 ? (
@@ -88,7 +122,7 @@ const Home = () => {
               </div>
               <div className="answer-stats">
                 <h4>Answers</h4>
-                <p>{answersCount?.answersCount}</p>
+                <p>{answersCount?.answersCount || 0}</p>
               </div>
             </div>
             <HotQuestions />
