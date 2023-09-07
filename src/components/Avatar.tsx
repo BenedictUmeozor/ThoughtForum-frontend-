@@ -1,7 +1,12 @@
-const Avatar = () => {
+type PropTypes = {
+  name: string;
+};
+
+const Avatar = ({ name }: PropTypes) => {
+  const letter = name[0].toUpperCase();
   return (
     <div className="avatar">
-      <p>B</p>
+      <p>{letter}</p>
     </div>
   );
 };

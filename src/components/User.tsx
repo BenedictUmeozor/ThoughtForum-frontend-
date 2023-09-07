@@ -45,7 +45,7 @@ const User = ({ user, onFetch }: PropTypes) => {
   return (
     <div className="user">
       <div className="left">
-        <Avatar />
+        <Avatar name={user.name} />
       </div>
       <div className="right">
         <div className="flex-between">

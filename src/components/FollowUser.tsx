@@ -41,7 +41,7 @@ const FollowUser = ({ user, onFetch, title, onClose }: Props) => {
     <div className="user">
       <div className="flex-between">
         <div className="flex">
-          <Avatar />
+          <Avatar name={user.name} />
           <Link
             onClick={() => onClose()}
             to={"/profile/" + user._id}

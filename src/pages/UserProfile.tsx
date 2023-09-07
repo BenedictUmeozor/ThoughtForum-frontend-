@@ -109,14 +109,18 @@ const UserProfile = () => {
                     alt="user"
                   />
                 </div>
-                {_id && user.followers.includes(_id) ? (
-                  <button className="following" onClick={followUser}>
-                    following
-                  </button>
+                {_id ? (
+                  user.followers.includes(_id) ? (
+                    <button className="following" onClick={followUser}>
+                      following
+                    </button>
+                  ) : (
+                    <button className="follow" onClick={followUser}>
+                      follow
+                    </button>
+                  )
                 ) : (
-                  <button className="follow" onClick={followUser}>
-                    follow
-                  </button>
+                  <span></span>
                 )}
               </div>
               <div className="follow">

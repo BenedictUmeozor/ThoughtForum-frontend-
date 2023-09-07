@@ -183,3 +183,12 @@ button {
 .pointer-events {
   pointer-events: none !important;
 }
+
+.no-auth-question {
+  font-size: 0.95rem;
+
+  a {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+}

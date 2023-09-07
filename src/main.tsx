@@ -12,6 +12,7 @@ import Home from "./pages/index.tsx";
 import Loader from "./components/Loader.tsx";
 import { Provider } from "react-redux";
 import store from "./store/store.ts";
+import ErrorPage from "./pages/ErrorPage.tsx";
 const Signup = lazy(() => import("./pages/Signup"));
 const Signin = lazy(() => import("./pages/Signin"));
 const Profile = lazy(() => import("./pages/Profile"));
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
       <Route path="question/:id" element={<QuestionPage />} />
       <Route path="categories/:id" element={<CategoriesPage />} />
       <Route path="logout" element={<Logout />} />
+      <Route path="error" element={<ErrorPage />} />
       <Route path="*" element={<Construction />} />
     </Route>
   )

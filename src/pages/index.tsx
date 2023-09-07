@@ -6,6 +6,7 @@ import AddQuestionForm from "../components/AddQuestionForm";
 import { axiosAuth, axiosInstance } from "../axios/axios";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { setQuestions } from "../features/QuestionsSlice";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const fetchBtns = document.querySelectorAll(".fetch-btn");
@@ -14,6 +15,7 @@ const Home = () => {
     answersCount: number;
   } | null>(null);
   const questions = useAppSelector((state) => state.questions);
+  const { _id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   const getQuestions = async () => {
@@ -78,7 +80,15 @@ const Home = () => {
       <div className="container">
         <div className="left-col">
           <div className="question-box">
-            <button onClick={() => setShowAddForm(true)}>Ask a question</button>
+            {_id ? (
+              <button onClick={() => setShowAddForm(true)}>
+                Ask a question
+              </button>
+            ) : (
+              <p className="no-auth-question">
+                Want to ask a question? <Link to="/login">Login</Link>
+              </p>
+            )}
           </div>
           <div className="stats">
             <div className="question-stats">
@@ -97,9 +107,11 @@ const Home = () => {
             <button className="fetch-btn" onClick={getTopQuestions}>
               Top questions
             </button>
-            <button className="fetch-btn" onClick={getFollowingQuestions}>
-              Following
-            </button>
+            {_id && (
+              <button className="fetch-btn" onClick={getFollowingQuestions}>
+                Following
+              </button>
+            )}
           </div>
 
           {questions.length > 0 ? (
@@ -112,7 +124,15 @@ const Home = () => {
         </div>
         <div className="right-col">
           <div className="question-box">
-            <button onClick={() => setShowAddForm(true)}>Ask a question</button>
+            {_id ? (
+              <button onClick={() => setShowAddForm(true)}>
+                Ask a question
+              </button>
+            ) : (
+              <p className="no-auth-question">
+                Want to ask a question? <Link to="/login">Login</Link>
+              </p>
+            )}
           </div>
           <div className="sidebar">
             <div className="stats">

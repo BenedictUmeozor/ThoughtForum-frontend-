@@ -14,7 +14,7 @@ import EditQuestionForm from "./EditQuestionForm";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { axiosAuth } from "../axios/axios";
 import { QuestionInterface } from "../helpers/interfaces";
-import { setSuccess } from "../features/SnackbarSlice";
+import { setSuccess, setWarning } from "../features/SnackbarSlice";
 
 type QuestionProps = {
   question: QuestionInterface;
@@ -35,6 +35,10 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
   };
 
   const likeQuestion = async () => {
+    if (!_id) {
+      dispatch(setWarning({ show: true, message: "You need to be logged in" }));
+      return;
+    }
     setLoading(true);
     try {
       const { data } = await axiosAuth.post("/questions/like/" + question._id);
@@ -77,7 +81,7 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
       <div className="question-header">
         <div className="flex">
           <Link to={"/profile/" + question.user._id} className="user">
-            <Avatar />
+            <Avatar name={question.user?.name} />
             <span>{question.user.name}</span>
           </Link>
           <div className="user-actions">

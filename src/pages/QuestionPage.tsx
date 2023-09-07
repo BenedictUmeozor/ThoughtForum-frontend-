@@ -12,7 +12,7 @@ import { CircularProgress } from "@mui/material";
 import { lightFormat } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { AnswerInterface, QuestionInterface } from "../helpers/interfaces";
-import { setSuccess } from "../features/SnackbarSlice";
+import { setSuccess, setWarning } from "../features/SnackbarSlice";
 
 const QuestionPage = () => {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -42,6 +42,10 @@ const QuestionPage = () => {
   };
 
   const likeQuestion = async () => {
+    if (!_id) {
+      dispatch(setWarning({ show: true, message: "You need to be logged in" }));
+      return;
+    }
     try {
       const { data } = await axiosAuth.post("/questions/like/" + question?._id);
       dispatch(setQuestions(data));
@@ -93,7 +97,7 @@ const QuestionPage = () => {
             <div className="main-question">
               <div className="header">
                 <div className="user">
-                  <Avatar />
+                  <Avatar name={question.user.name} />
                   <Link to={"/profile/" + question.user._id}>
                     {question.user.name}
                   </Link>
@@ -160,13 +164,15 @@ const QuestionPage = () => {
                       Showing <span>{answers.length}</span>{" "}
                       {answers.length === 1 ? "answer" : "answers"}
                     </div>
-                    <button
-                      className="answer-btn"
-                      onClick={() => setShowAddForm(true)}
-                    >
-                      <AnswerIcon className="icon" />
-                      Answer
-                    </button>
+                    {_id && (
+                      <button
+                        className="answer-btn"
+                        onClick={() => setShowAddForm(true)}
+                      >
+                        <AnswerIcon className="icon" />
+                        Answer
+                      </button>
+                    )}
                   </div>
                 </div>
                 {answers.length > 0 ? (

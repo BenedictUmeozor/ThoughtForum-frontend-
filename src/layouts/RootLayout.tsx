@@ -8,7 +8,7 @@ import { AxiosError } from "axios";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { setCategories } from "../features/CategoriesSlice";
 import jwt_decode from "jwt-decode";
-import { setCredentials } from "../features/AuthSlice";
+import { deleteCredentials, setCredentials } from "../features/AuthSlice";
 import {
   SnackbarError,
   SnackbarInfo,
@@ -83,6 +83,33 @@ const RootLayout = () => {
       }
 
       return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  axiosAuth.interceptors.response.use(
+    (response) => {
+      if (response.status === 401) {
+        dispatch(deleteCredentials());
+        dispatch(
+          setWarning({ show: true, message: "Loin to perform this action" })
+        );
+      }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  axiosInstance.interceptors.response.use(
+    (response) => {
+      if (response.status === 401) {
+        dispatch(deleteCredentials());
+      }
+      return response;
     },
     (error) => {
       return Promise.reject(error);

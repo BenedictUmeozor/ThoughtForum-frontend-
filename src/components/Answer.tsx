@@ -12,7 +12,7 @@ import { lightFormat } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import EditAnswer from "./EditAnswer";
 import { axiosAuth } from "../axios/axios";
-import { setSuccess } from "../features/SnackbarSlice";
+import { setSuccess, setWarning } from "../features/SnackbarSlice";
 
 type PropTypes = {
   answer: AnswerInterface;
@@ -32,6 +32,10 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
   };
 
   const likeAnswer = () => {
+    if (!_id) {
+      dispatch(setWarning({ show: true, message: "You need to be logged in" }));
+      return;
+    }
     setLoading(true);
     axiosAuth
       .post("/answers/" + answer._id)
@@ -69,7 +73,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
       )}
       <div className="answer-header">
         <Link to={"/profile/" + answer.user._id} className="user">
-          <Avatar />
+          <Avatar name={answer.user?.name} />
           <span>{answer.user.name}</span>
         </Link>
         {_id && answer.user._id === _id && (
