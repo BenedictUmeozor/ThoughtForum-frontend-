@@ -88,7 +88,10 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
             <div className="follow-edit-div">
               {_id && question.user._id === _id && (
                 <div className="ellipsis">
-                  <div onClick={() => setShow((prev) => !prev)}>
+                  <div
+                    className="ellipsis-div"
+                    onClick={() => setShow((prev) => !prev)}
+                  >
                     <EllipsisVertical className="icon" />
                   </div>
                   <div className={`ellipsis-content ${show && "active"}`}>
