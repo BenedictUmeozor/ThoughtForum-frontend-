@@ -5,7 +5,7 @@ import ProtectedLayout from "../layouts/ProtectedLayout";
 import { axiosAuth } from "../axios/axios";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
-import { setSuccess } from "../features/SnackbarSlice";
+import { setError, setSuccess } from "../features/SnackbarSlice";
 
 const Logout = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +24,12 @@ const Logout = () => {
       })
       .catch((error) => {
         console.log(error);
+        dispatch(
+          setError({
+            show: true,
+            message: "There was a server error, try again later",
+          })
+        );
       })
       .finally(() => setLoading(false));
   };

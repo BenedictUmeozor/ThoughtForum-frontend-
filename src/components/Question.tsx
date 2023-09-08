@@ -9,7 +9,7 @@ import {
 } from "../assets/icons";
 import { useState } from "react";
 import { setQuestions } from "../features/QuestionsSlice";
-import { lightFormat } from "date-fns";
+import { formatRFC7231 } from "date-fns";
 import EditQuestionForm from "./EditQuestionForm";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { axiosAuth } from "../axios/axios";
@@ -121,10 +121,16 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
         <Link to={"/question/" + question._id}>
           <h2 className="title">{question.title}</h2>
         </Link>
-        <p className="body">{question.body}</p>
+        <p className="body">
+          {question.body.substring(0, 120) +
+            [
+              question.body.length > question.body.substring(0, 120).length
+                ? "..."
+                : "",
+            ]}
+        </p>
         <span className="time">
-          Asked:{" "}
-          {lightFormat(new Date(question.createdAt), "yyyy-MMM-dd h:m a")}
+          Asked: {formatRFC7231(new Date(question.createdAt))}
         </span>
       </div>
       <div className="question-footer">

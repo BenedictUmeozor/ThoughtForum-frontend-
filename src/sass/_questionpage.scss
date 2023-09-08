@@ -32,6 +32,8 @@
           align-items: center;
           justify-content: space-between;
           margin-bottom: 0.6rem;
+          padding-bottom: 0.7rem;
+          border-bottom: 1px solid #eee;
 
           .user {
             display: flex;
@@ -43,8 +45,6 @@
               color: $secondary-color;
             }
           }
-
-          
         }
 
         .category {
@@ -96,6 +96,10 @@
               align-items: center;
               column-gap: 0.25rem;
 
+              &.likes {
+                cursor: pointer;
+              }
+
               .icon {
                 width: 1.3rem;
               }
@@ -109,6 +113,16 @@
       }
 
       .answers-div {
+        .answers-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.5rem;
+
+          @media (max-width: 768px) {
+            display: block;
+          }
+        }
+
         .answers-count {
           margin: 1rem 0;
 

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { QuestionIcon } from "../assets/icons";
-import Avatar from "./Avatar";
 import { useState } from "react";
 import { axiosAuth } from "../axios/axios";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
@@ -32,8 +31,8 @@ const User = ({ user, onFetch }: PropTypes) => {
         dispatch(
           setSuccess({
             show: true,
-            message: !user?.followers.includes(_id!)
-              ? `Succesfully unfollowed ${user?.name}`
+            message: user?.followers.includes(_id!)
+              ? `You have unfollowed ${user?.name}`
               : `You are now following ${user?.name}`,
           })
         )
@@ -44,41 +43,32 @@ const User = ({ user, onFetch }: PropTypes) => {
 
   return (
     <div className="user">
-      <div className="left">
-        <Avatar name={user.name} />
+      <div className="flex-between">
+        <Link to={"/profile/" + user._id} className="name">
+          {user.name}
+        </Link>
+        {_id &&
+          _id !== user._id &&
+          (user.followers.includes(_id) ? (
+            <button
+              disabled={loading}
+              className="following"
+              onClick={followUser}
+            >
+              following
+            </button>
+          ) : (
+            <button disabled={loading} className="follow" onClick={followUser}>
+              follow
+            </button>
+          ))}
       </div>
-      <div className="right">
-        <div className="flex-between">
-          <Link to={"/profile/" + user._id} className="name">
-            {user.name}
-          </Link>
-          {_id &&
-            _id !== user._id &&
-            (user.followers.includes(_id) ? (
-              <button
-                disabled={loading}
-                className="following"
-                onClick={followUser}
-              >
-                following
-              </button>
-            ) : (
-              <button
-                disabled={loading}
-                className="follow"
-                onClick={followUser}
-              >
-                follow
-              </button>
-            ))}
-        </div>
-        <div className="questions">
-          <QuestionIcon className="icon" />
-          <span>
-            {user.questions.length}{" "}
-            {user.questions.length === 1 ? "question" : "questions"}
-          </span>
-        </div>
+      <div className="questions">
+        <QuestionIcon className="icon" />
+        <span>
+          {user.questions.length}{" "}
+          {user.questions.length === 1 ? "question" : "questions"}
+        </span>
       </div>
     </div>
   );

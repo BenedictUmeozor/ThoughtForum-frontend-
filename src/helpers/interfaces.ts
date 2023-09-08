@@ -83,3 +83,13 @@ export interface SnackbarInterface {
   warning: boolean;
   warningMessage: string;
 }
+
+export interface RelatedQuestion {
+  _id: string;
+  title: string;
+  body: string;
+  user: {
+    _id: string;
+    name: string;
+  };
+}

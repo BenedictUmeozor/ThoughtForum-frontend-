@@ -41,7 +41,8 @@ const Signin = () => {
           setError(errorData.error);
         }
       }
-      setLoading(false);
+    } finally {
+      setLoading(false)
     }
   };
 

@@ -1,5 +1,4 @@
 import { Link, useParams } from "react-router-dom";
-import HotQuestions from "../components/HotQuestions";
 import TopMembers from "../components/TopMembers";
 import Avatar from "../components/Avatar";
 import { AnswerIcon, LikeIcon } from "../assets/icons";
@@ -9,41 +8,54 @@ import AddAnswerForm from "../components/AddAnswerForm";
 import { setQuestions } from "../features/QuestionsSlice";
 import { axiosAuth, axiosInstance } from "../axios/axios";
 import { CircularProgress } from "@mui/material";
-import { lightFormat } from "date-fns";
+import { formatRFC7231 } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { AnswerInterface, QuestionInterface } from "../helpers/interfaces";
-import { setSuccess, setWarning } from "../features/SnackbarSlice";
+import { setError, setSuccess, setWarning } from "../features/SnackbarSlice";
+import RelatedQuestions from "../components/RelatedQuestions";
 
 const QuestionPage = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [question, setQuestion] = useState<QuestionInterface | null>(null);
   const [answers, setAnswers] = useState<AnswerInterface[] | null>(null);
+  const [getQuestionsError, setGetQuestionsError] = useState(false);
+  const [getAnswersError, setGetAnswersError] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [followLoading, setFollowLoading] = useState(false);
   const dispatch = useAppDispatch();
   const { _id } = useAppSelector((state) => state.auth);
 
   const { id } = useParams();
 
   const getQuestion = async () => {
+    setGetQuestionsError(false);
     try {
       const { data } = await axiosInstance.get("/questions/" + id);
       setQuestion(data);
     } catch (error) {
+      dispatch(setError({ show: true, message: "Server error" }));
+      setGetQuestionsError(true);
       console.log(error);
     }
   };
 
   const getAnswers = async () => {
+    setGetAnswersError(false);
     try {
       const { data } = await axiosInstance.get("/answers/" + id);
       setAnswers(data);
     } catch (error) {
+      dispatch(setError({ show: true, message: "Server error" }));
+      setGetAnswersError(true);
       console.log(error);
     }
   };
 
   const likeQuestion = async () => {
+    setLikeLoading(true);
     if (!_id) {
       dispatch(setWarning({ show: true, message: "You need to be logged in" }));
+      setLikeLoading(false);
       return;
     }
     try {
@@ -52,10 +64,14 @@ const QuestionPage = () => {
       getQuestion();
     } catch (error) {
       console.log(error);
+      dispatch(setError({ show: true, message: "Something went wrong" }));
+    } finally {
+      setLikeLoading(false);
     }
   };
 
   const followUser = () => {
+    setFollowLoading(true);
     axiosAuth
       .post("/users/" + question?.user._id)
       .then(() => getQuestion())
@@ -63,11 +79,17 @@ const QuestionPage = () => {
         dispatch(
           setSuccess({
             show: true,
-            message: `You are now following ${question?.user.name}`,
+            message: !question?.user.followers.includes(_id!)
+              ? `You are now following ${question?.user.name}`
+              : `You are now unfollowing ${question?.user.name}`,
           })
         );
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        dispatch(setError({ show: true, message: "Something went wrong" }));
+      })
+      .finally(() => setFollowLoading(false));
   };
 
   useEffect(() => {
@@ -88,107 +110,149 @@ const QuestionPage = () => {
       )}
       <div className="container">
         <div className="left-col">
-          {!question && (
-            <div className="load-data questions-load">
-              <CircularProgress />
-            </div>
+          {getQuestionsError && (
+            <>
+              <div className="load-data">
+                <p className="server-error-text">There was a server error</p>
+              </div>
+            </>
           )}
-          {question && (
-            <div className="main-question">
-              <div className="header">
-                <div className="user">
-                  <Avatar name={question.user.name} />
-                  <Link to={"/profile/" + question.user._id}>
-                    {question.user.name}
-                  </Link>
+          {!getQuestionsError && (
+            <>
+              {!question && (
+                <div className="load-data questions-load">
+                  <CircularProgress />
                 </div>
-                <div className="follow-edit-div">
-                  {_id &&
-                    _id !== question.user._id &&
-                    (question.user.followers.includes(_id) ? (
-                      <button className="following" onClick={followUser}>
-                        following
-                      </button>
-                    ) : (
-                      <button className="follow" onClick={followUser}>
-                        follow
-                      </button>
-                    ))}
-                </div>
-              </div>
-              <p className="category">
-                in{" "}
-                <Link to={"/categories/" + question.category._id}>
-                  {question.category.title}
-                </Link>
-              </p>
-              <div className="body">
-                <h3>{question.title}</h3>
-                <p>{question.body}</p>
-                <span className="time">
-                  Asked:{" "}
-                  {lightFormat(
-                    new Date(question.createdAt),
-                    "yyyy-MMM-dd h:m a"
-                  )}
-                </span>
-              </div>
-              <div className="footer">
-                <div className="actions">
-                  <div className="likes" onClick={likeQuestion}>
-                    <LikeIcon
-                      className="icon"
-                      fill={question.likes.includes(_id) ? "crimson" : "none"}
-                    />
-                    <span>{question.likes.length}</span>
-                  </div>
-                  <div className="answers" onClick={() => setShowAddForm(true)}>
-                    <AnswerIcon className="icon" />
-                    <span>{question.answers.length}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          <div className="answers-div">
-            {!answers && (
-              <div className="load-data answers-load">
-                <CircularProgress />
-              </div>
-            )}
-            {answers && (
-              <>
-                <div className="answers-count">
-                  <div className="showing">
-                    <div>
-                      Showing <span>{answers.length}</span>{" "}
-                      {answers.length === 1 ? "answer" : "answers"}
+              )}
+              {question && (
+                <div className="main-question">
+                  <div className="header">
+                    <div className="user">
+                      <Avatar name={question.user.name} />
+                      <Link to={"/profile/" + question.user._id}>
+                        {question.user.name}
+                      </Link>
                     </div>
-                    {_id && (
-                      <button
-                        className="answer-btn"
+                    <div className="follow-edit-div">
+                      {_id &&
+                        _id !== question.user._id &&
+                        (question.user.followers.includes(_id) ? (
+                          <button
+                            disabled={followLoading}
+                            className="following"
+                            onClick={followUser}
+                          >
+                            {followLoading ? (
+                              <CircularProgress size={"0.95rem"} />
+                            ) : (
+                              "following"
+                            )}
+                          </button>
+                        ) : (
+                          <button
+                            disabled={followLoading}
+                            className="follow"
+                            onClick={followUser}
+                          >
+                            {followLoading ? (
+                              <CircularProgress size={"0.95rem"} />
+                            ) : (
+                              "follow"
+                            )}
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                  <p className="category">
+                    in{" "}
+                    <Link to={"/categories/" + question.category._id}>
+                      {question.category.title}
+                    </Link>
+                  </p>
+                  <div className="body">
+                    <h3>{question.title}</h3>
+                    <p>{question.body}</p>
+                    <span className="time">
+                      Asked: {formatRFC7231(new Date(question.createdAt))}
+                    </span>
+                  </div>
+                  <div className="footer">
+                    <div className="actions">
+                      <div
+                        className={`likes ${likeLoading && "pointer-events"}`}
+                        onClick={likeQuestion}
+                      >
+                        <LikeIcon
+                          className="icon"
+                          fill={
+                            question.likes.includes(_id) ? "crimson" : "none"
+                          }
+                        />
+                        <span>{question.likes.length}</span>
+                      </div>
+                      <div
+                        className="answers"
                         onClick={() => setShowAddForm(true)}
                       >
                         <AnswerIcon className="icon" />
-                        Answer
-                      </button>
-                    )}
+                        <span>{question.answers.length}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                {answers.length > 0 ? (
-                  <div className="answers-list">
-                    {answers.map((answer) => (
-                      <Answer
-                        onFetch={getAnswers}
-                        key={answer._id}
-                        answer={answer}
-                      />
-                    ))}
+              )}
+            </>
+          )}
+          <div className="answers-div">
+            {getAnswersError && (
+              <>
+                <div className="load-data">
+                  <p className="server-error-text">There was a server error</p>
+                </div>
+              </>
+            )}
+            {!getAnswersError && (
+              <>
+                {!answers && (
+                  <div className="load-data answers-load">
+                    <CircularProgress />
                   </div>
-                ) : (
-                  <div className="no-data no-answers">
-                    <p>No answers to show</p>
-                  </div>
+                )}
+                {answers && (
+                  <>
+                    <div className="answers-count">
+                      <div className="showing">
+                        <div>
+                          Showing <span>{answers.length}</span>{" "}
+                          {answers.length === 1 ? "answer" : "answers"}
+                        </div>
+                        {_id && (
+                          <button
+                            className="answer-btn"
+                            onClick={() => setShowAddForm(true)}
+                          >
+                            <AnswerIcon className="icon" />
+                            Answer
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    {answers.length > 0 ? (
+                      <div className="answers-list">
+                        {answers.map((answer) => (
+                          <Answer
+                            onFetch={getAnswers}
+                            key={answer._id}
+                            answer={answer}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="no-data no-answers">
+                        <p>No answers to show</p>
+                      </div>
+                    )}
+                  </>
                 )}
               </>
             )}
@@ -196,7 +260,7 @@ const QuestionPage = () => {
         </div>
         <div className="right-col">
           <div className="sidebar">
-            <HotQuestions />
+            <RelatedQuestions id={question?.category._id} />
             <TopMembers />
           </div>
         </div>

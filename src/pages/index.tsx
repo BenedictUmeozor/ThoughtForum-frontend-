@@ -7,10 +7,12 @@ import { axiosAuth, axiosInstance } from "../axios/axios";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { setQuestions } from "../features/QuestionsSlice";
 import { Link } from "react-router-dom";
+import { setError } from "../features/SnackbarSlice";
 
 const Home = () => {
   const fetchBtns = document.querySelectorAll(".fetch-btn");
   const [showAddForm, setShowAddForm] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
   const [answersCount, setAnswersCount] = useState<{
     answersCount: number;
   } | null>(null);
@@ -19,29 +21,35 @@ const Home = () => {
   const dispatch = useAppDispatch();
 
   const getQuestions = async () => {
+    setFetchError(false);
     try {
       const { data } = await axiosInstance.get("/questions");
       dispatch(setQuestions(data));
     } catch (error) {
-      console.log(error);
+      dispatch(setError({ show: true, message: "Server error" }));
+      setFetchError(true);
     }
   };
 
   const getTopQuestions = async () => {
+    setFetchError(false)
     try {
       const { data } = await axiosInstance.get("/questions/top-questions");
       dispatch(setQuestions(data));
     } catch (error) {
-      console.log(error);
+      dispatch(setError({ show: true, message: "Server error" }));
+      setFetchError(true)
     }
   };
 
   const getFollowingQuestions = async () => {
+    setFetchError(false)
     try {
       const { data } = await axiosAuth.get("/questions/following-questions");
       dispatch(setQuestions(data));
     } catch (error) {
-      console.log(error);
+      dispatch(setError({ show: true, message: "Server error" }));
+      setFetchError(true)
     }
   };
 
@@ -114,11 +122,22 @@ const Home = () => {
             )}
           </div>
 
-          {questions.length > 0 ? (
-            <Questions onFetch={getQuestions} />
-          ) : (
-            <div className="no-data no-questions">
-              <p>No questions to show</p>
+          {!fetchError && (
+            <div>
+              {questions.length > 0 ? (
+                <Questions onFetch={getQuestions} />
+              ) : (
+                <div className="no-data no-questions">
+                  <p>No questions to show</p>
+                </div>
+              )}
+            </div>
+          )}
+          {fetchError && (
+            <div className="load-data">
+              <p className="server-error-text">
+                There was a problem with the server
+              </p>
             </div>
           )}
         </div>

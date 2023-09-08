@@ -1,7 +1,7 @@
 import { Suspense, useEffect } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import { axiosAuth, axiosInstance } from "../axios/axios";
 import { AxiosError } from "axios";
@@ -24,6 +24,7 @@ import {
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     success,
     successMessage,
@@ -43,6 +44,7 @@ const RootLayout = () => {
       dispatch(setCredentials(data));
     } catch (error) {
       console.log(error);
+      dispatch(setError({ show: true, message: "Server error" }));
     }
   };
 
@@ -58,6 +60,7 @@ const RootLayout = () => {
           console.log(errorData.error);
         }
       }
+      dispatch(setError({ show: true, message: "Server error" }));
     }
   };
 
@@ -93,8 +96,9 @@ const RootLayout = () => {
     (response) => {
       if (response.status === 401) {
         dispatch(deleteCredentials());
+        navigate("/login");
         dispatch(
-          setWarning({ show: true, message: "Loin to perform this action" })
+          setWarning({ show: true, message: "Login to perform this action" })
         );
       }
       return response;
@@ -108,6 +112,7 @@ const RootLayout = () => {
     (response) => {
       if (response.status === 401) {
         dispatch(deleteCredentials());
+        navigate("/login");
       }
       return response;
     },
@@ -124,25 +129,25 @@ const RootLayout = () => {
     if (success) {
       setTimeout(() => {
         dispatch(setSuccess({ show: false, message: "" }));
-      }, 3500);
+      }, 5500);
     }
 
     if (error) {
       setTimeout(() => {
         dispatch(setError({ show: false, message: "" }));
-      }, 3500);
+      }, 5500);
     }
 
     if (info) {
       setTimeout(() => {
         dispatch(setInfo({ show: false, message: "" }));
-      }, 3500);
+      }, 5500);
     }
 
     if (warning) {
       setTimeout(() => {
         dispatch(setWarning({ show: false, message: "" }));
-      }, 3500);
+      }, 5500);
     }
   }, [success, info, warning, error]);
 

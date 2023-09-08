@@ -4,7 +4,7 @@ import { axiosAuth } from "../axios/axios";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { setSuccess } from "../features/SnackbarSlice";
+import { setError, setSuccess } from "../features/SnackbarSlice";
 
 type Props = {
   user: userInterface;
@@ -27,13 +27,16 @@ const FollowUser = ({ user, onFetch, title, onClose }: Props) => {
         dispatch(
           setSuccess({
             show: true,
-            message: !user?.followers.includes(_id!)
+            message: user?.followers.includes(_id!)
               ? `Succesfully unfollowed ${user?.name}`
               : `You are now following ${user?.name}`,
           })
         )
       )
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        dispatch(setError({show: true, message: "Something went wrong"}))
+      })
       .finally(() => setLoading(false));
   };
 

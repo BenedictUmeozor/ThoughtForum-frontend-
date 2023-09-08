@@ -48,6 +48,7 @@ const Signup = () => {
           setError(errorData.error);
         }
       }
+    } finally {
       setLoading(false);
     }
   };

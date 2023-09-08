@@ -38,8 +38,6 @@ const AddAnswerForm = ({
       question: question_id,
     };
 
-    console.log(payload);
-
     axiosAuth
       .post("/answers", payload)
       .then(() => {
