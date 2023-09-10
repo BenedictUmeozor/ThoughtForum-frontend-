@@ -21,6 +21,9 @@ import {
   setSuccess,
   setWarning,
 } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
+import "react-toastify/dist/ReactToastify.css";
+import { setUser } from "../features/UserSlice";
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +38,9 @@ const RootLayout = () => {
     warning,
     warningMessage,
   } = useAppSelector((state) => state.snackbar);
+  const { _id } = useAppSelector((state) => state.auth);
+
+  const socket = useSocket();
 
   const refresh = async (refreshToken: string) => {
     try {
@@ -121,9 +127,48 @@ const RootLayout = () => {
     }
   );
 
+  const getUser = async () => {
+    try {
+      const { data } = await axiosAuth.get("/users");
+      dispatch(setUser(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (socket && _id) {
+      socket.emit("login", _id);
+    }
+  }, [socket, _id]);
+
+  useEffect(() => {
+    socket?.on("like", (user) => {
+      dispatch(setInfo({ show: true, message: `${user} liked your question` }));
+    });
+
+    socket?.on("answer", (user) => {
+      dispatch(
+        setInfo({ show: true, message: `${user} answered your question` })
+      );
+    });
+
+    socket?.on("answer", (user) => {
+      dispatch(
+        setInfo({ show: true, message: `${user} started following you` })
+      );
+    });
+  }, [socket]);
+
   useEffect(() => {
     getCategories();
   }, []);
+
+  useEffect(() => {
+    if (_id) {
+      getUser();
+    }
+  }, [_id]);
 
   useEffect(() => {
     if (success) {

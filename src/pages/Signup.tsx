@@ -7,6 +7,8 @@ import UnProtectedLayout from "../layouts/UnProtectedLayout";
 import { setCredentials } from "../features/AuthSlice";
 import { useAppDispatch } from "../hooks/hooks";
 import { setSuccess } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
+import { AuthState } from "../helpers/interfaces";
 // import { useDispatch } from "react-redux";
 
 interface FormData {
@@ -23,6 +25,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const socket = useSocket();
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -40,6 +43,8 @@ const Signup = () => {
       const { data } = await axiosInstance.post("/auth", payload);
       dispatch(setCredentials(data));
       dispatch(setSuccess({ show: true, message: "Logged in successfully" }));
+      const user = data as AuthState;
+      socket?.emit("login", user._id);
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response) {

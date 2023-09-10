@@ -8,11 +8,12 @@ import {
 } from "../assets/icons";
 import { useState } from "react";
 import { AnswerInterface } from "../helpers/interfaces";
-import { lightFormat } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import EditAnswer from "./EditAnswer";
 import { axiosAuth } from "../axios/axios";
 import { setSuccess, setWarning } from "../features/SnackbarSlice";
+import { formatRFC7231 } from "date-fns";
+import { useSocket } from "../contexts/socket";
 
 type PropTypes = {
   answer: AnswerInterface;
@@ -24,6 +25,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
   const [showForm, setShowForm] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
+  const socket = useSocket();
   const dispatch = useAppDispatch();
 
   const showEditForm = () => {
@@ -49,14 +51,15 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
     axiosAuth
       .delete("/answers/" + answer._id)
       .then(() => onFetch())
-      .then(() =>
+      .then(() => {
         dispatch(
           setSuccess({
             show: true,
             message: `Answer deleted successfully`,
           })
-        )
-      )
+        );
+        socket?.emit("answerCreated")
+      })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   };
@@ -101,7 +104,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
         <p>{answer.text}</p>
 
         <span className="time">
-          {lightFormat(new Date(answer.createdAt), "yyyy-MMM-dd h:m a")}
+          {formatRFC7231(new Date(answer.createdAt))}
         </span>
       </div>
       <div className="answer-footer">

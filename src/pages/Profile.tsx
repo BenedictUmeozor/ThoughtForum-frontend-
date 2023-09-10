@@ -48,7 +48,6 @@ const Profile = () => {
 
   const getUserQuestions = async () => {
     if (user?.questions) {
-      console.log("getUserQuestions ran");
       const questionPromises = user.questions.map(async (question) => {
         const response = await axiosInstance.get("/questions/" + question);
         return response.data;

@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { AnswerInterface, QuestionInterface } from "../helpers/interfaces";
 import { setError, setSuccess, setWarning } from "../features/SnackbarSlice";
 import RelatedQuestions from "../components/RelatedQuestions";
+import { useSocket } from "../contexts/socket";
 
 const QuestionPage = () => {
   const [showAddForm, setShowAddForm] = useState(false);
@@ -23,7 +24,9 @@ const QuestionPage = () => {
   const [likeLoading, setLikeLoading] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const { _id } = useAppSelector((state) => state.auth);
+  const socket = useSocket();
 
   const { id } = useParams();
 
@@ -84,6 +87,9 @@ const QuestionPage = () => {
               : `You are now unfollowing ${question?.user.name}`,
           })
         );
+        if (!question?.user.followers.includes(_id!)) {
+          socket?.emit("follow", { _id: question?.user._id, name: user?.name });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -98,11 +104,19 @@ const QuestionPage = () => {
     }
   }, [id]);
 
+  useEffect(() => {
+    socket?.on("answerCreated", async () => {
+      await getQuestion();
+      await getAnswers();
+    });
+  });
+
   return (
     <section className="question-page">
       {showAddForm && (
         <AddAnswerForm
           question_id={question!._id}
+          user_id={question!.user._id}
           onClose={() => setShowAddForm(false)}
           closeModal={() => setShowAddForm(false)}
           onFetch={getAnswers}

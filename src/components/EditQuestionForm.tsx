@@ -6,6 +6,7 @@ import { CircularProgress } from "@mui/material";
 import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
 import { setSuccess } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -27,6 +28,7 @@ const EditQuestionForm = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const socket = useSocket()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +39,6 @@ const EditQuestionForm = ({
       category,
       body,
     };
-    console.log(payload);
 
     axiosAuth
       .put("/questions/" + question._id, payload)
@@ -50,6 +51,7 @@ const EditQuestionForm = ({
             message: `Question updated successfully`,
           })
         );
+        socket?.emit("questionCreated")
       })
       .catch((error) => {
         const axiosError = error as AxiosError;

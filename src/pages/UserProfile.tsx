@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import female from "../assets/images/woman.png";
 import { formatRFC7231 } from "date-fns";
 import { setError, setSuccess } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
 
 const UserProfile = () => {
   const [modalTitle, setModalTitle] = useState("Followers");
@@ -22,6 +23,8 @@ const UserProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { _id } = useAppSelector((state) => state.auth);
+  const socket = useSocket();
+  const mainUser = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const showFollowers = () => {
@@ -51,7 +54,7 @@ const UserProfile = () => {
     axiosAuth
       .post("/users/" + user?._id)
       .then(() => getUser())
-      .then(() =>
+      .then(() => {
         dispatch(
           setSuccess({
             show: true,
@@ -59,8 +62,11 @@ const UserProfile = () => {
               ? `Succesfully unfollowed ${user?.name}`
               : `You are now following ${user?.name}`,
           })
-        )
-      )
+        );
+        if (!user?.followers.includes(_id!)) {
+          socket?.emit("follow", { _id: id, name: mainUser?.name });
+        }
+      })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
   };
@@ -184,8 +190,7 @@ const UserProfile = () => {
                     </div>
                   </div>
                   <span className="joined">
-                    Joined{" "}
-                    {formatRFC7231(new Date(user.createdAt))}
+                    Joined {formatRFC7231(new Date(user.createdAt))}
                   </span>
                 </>
               ) : (

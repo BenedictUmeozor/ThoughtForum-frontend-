@@ -7,6 +7,8 @@ import { useAppDispatch } from "../hooks/hooks";
 import { setCredentials } from "../features/AuthSlice";
 import { AxiosError } from "axios";
 import { setSuccess } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
+import { AuthState } from "../helpers/interfaces";
 
 interface FormData {
   email: string;
@@ -18,6 +20,7 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const socket = useSocket();
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -33,6 +36,8 @@ const Signin = () => {
       const { data } = await axiosInstance.post("/auth/login", payload);
       dispatch(setCredentials(data));
       dispatch(setSuccess({ show: true, message: "Logged in successfully" }));
+      const user = data as AuthState;
+      socket?.emit("login", user._id);
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response) {
@@ -42,7 +47,7 @@ const Signin = () => {
         }
       }
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 

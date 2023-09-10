@@ -3,6 +3,7 @@ import AuthSlice from "../features/AuthSlice";
 import CategoriesSlice from "../features/CategoriesSlice";
 import QuestionsSlice from "../features/QuestionsSlice";
 import SnackbarSlice from "../features/SnackbarSlice";
+import UserSlice from "../features/UserSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     categories: CategoriesSlice,
     questions: QuestionsSlice,
     snackbar: SnackbarSlice,
+    user: UserSlice,
   },
 });
 

@@ -13,6 +13,7 @@ import Loader from "./components/Loader.tsx";
 import { Provider } from "react-redux";
 import store from "./store/store.ts";
 import ErrorPage from "./pages/ErrorPage.tsx";
+import { SocketProvider } from "./contexts/socket.tsx";
 const Signup = lazy(() => import("./pages/Signup"));
 const Signin = lazy(() => import("./pages/Signin"));
 const Profile = lazy(() => import("./pages/Profile"));
@@ -50,7 +51,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <SocketProvider>
+        <RouterProvider router={router} />
+      </SocketProvider>
     </Provider>
   </React.StrictMode>
 );

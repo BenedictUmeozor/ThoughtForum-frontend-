@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { setError, setSuccess } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
 
 type Props = {
   user: userInterface;
@@ -16,14 +17,16 @@ type Props = {
 const FollowUser = ({ user, onFetch, title, onClose }: Props) => {
   const [loading, setLoading] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
+  const mainUser = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const socket = useSocket();
 
   const followUser = () => {
     setLoading(true);
     axiosAuth
       .post("/users/" + user._id)
       .then(() => onFetch())
-      .then(() =>
+      .then(() => {
         dispatch(
           setSuccess({
             show: true,
@@ -31,11 +34,14 @@ const FollowUser = ({ user, onFetch, title, onClose }: Props) => {
               ? `Succesfully unfollowed ${user?.name}`
               : `You are now following ${user?.name}`,
           })
-        )
-      )
+        );
+        if (!user.followers.includes(_id!)) {
+          socket?.emit("follow", { _id: user._id, name: mainUser.name });
+        }
+      })
       .catch((error) => {
-        console.log(error)
-        dispatch(setError({show: true, message: "Something went wrong"}))
+        console.log(error);
+        dispatch(setError({ show: true, message: "Something went wrong" }));
       })
       .finally(() => setLoading(false));
   };

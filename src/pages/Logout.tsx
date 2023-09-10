@@ -6,17 +6,20 @@ import { axiosAuth } from "../axios/axios";
 import { useState } from "react";
 import { CircularProgress } from "@mui/material";
 import { setError, setSuccess } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
 
 const Logout = () => {
   const dispatch = useAppDispatch();
   const { refreshToken } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
+  const socket = useSocket();
 
   const handleClick = () => {
     setLoading(true);
     axiosAuth
       .post("/auth/logout", { token: refreshToken })
       .then(() => {
+        socket?.emit("logout");
         dispatch(deleteCredentials());
         dispatch(
           setSuccess({ show: true, message: "Logged out successfully" })

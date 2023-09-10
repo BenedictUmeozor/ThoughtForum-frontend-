@@ -5,6 +5,7 @@ import { CircularProgress } from "@mui/material";
 import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
 import { setSuccess } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -31,6 +32,7 @@ const AddQuestionForm = ({ onClose, closeModal, onFetch }: PropTypes) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const socket = useSocket();
   const categories: Category[] =
     useAppSelector((state) => state.categories) || [];
 
@@ -55,6 +57,7 @@ const AddQuestionForm = ({ onClose, closeModal, onFetch }: PropTypes) => {
             message: `Question created successfully`,
           })
         );
+        socket?.emit("questionCreated");
       })
       .catch((error) => {
         const axiosError = error as AxiosError;

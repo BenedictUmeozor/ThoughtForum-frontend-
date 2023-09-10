@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { axiosAuth } from "../axios/axios";
 import { QuestionInterface } from "../helpers/interfaces";
 import { setSuccess, setWarning } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
 
 type QuestionProps = {
   question: QuestionInterface;
@@ -28,6 +29,8 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
   const [showForm, setShowForm] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const socket = useSocket();
 
   const showEditForm = () => {
     setShowForm(true);
@@ -46,6 +49,15 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
       if (onLike) {
         onLike();
       }
+      if (question.user._id !== _id) {
+        if (!question.likes.includes(_id)) {
+          socket?.emit("like", {
+            _id: question.user._id,
+            type: "question",
+            name: user?.name,
+          });
+        }
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -61,6 +73,7 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
       dispatch(
         setSuccess({ show: true, message: "Question deleted successfully" })
       );
+      socket?.emit("questionCreated");
     } catch (error) {
       console.log(error);
     } finally {

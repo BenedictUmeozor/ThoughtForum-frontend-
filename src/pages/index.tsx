@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { setQuestions } from "../features/QuestionsSlice";
 import { Link } from "react-router-dom";
 import { setError } from "../features/SnackbarSlice";
+import { useSocket } from "../contexts/socket";
 
 const Home = () => {
   const fetchBtns = document.querySelectorAll(".fetch-btn");
@@ -18,6 +19,7 @@ const Home = () => {
   } | null>(null);
   const questions = useAppSelector((state) => state.questions);
   const { _id } = useAppSelector((state) => state.auth);
+  const socket = useSocket();
   const dispatch = useAppDispatch();
 
   const getQuestions = async () => {
@@ -32,24 +34,24 @@ const Home = () => {
   };
 
   const getTopQuestions = async () => {
-    setFetchError(false)
+    setFetchError(false);
     try {
       const { data } = await axiosInstance.get("/questions/top-questions");
       dispatch(setQuestions(data));
     } catch (error) {
       dispatch(setError({ show: true, message: "Server error" }));
-      setFetchError(true)
+      setFetchError(true);
     }
   };
 
   const getFollowingQuestions = async () => {
-    setFetchError(false)
+    setFetchError(false);
     try {
       const { data } = await axiosAuth.get("/questions/following-questions");
       dispatch(setQuestions(data));
     } catch (error) {
       dispatch(setError({ show: true, message: "Server error" }));
-      setFetchError(true)
+      setFetchError(true);
     }
   };
 
@@ -75,6 +77,12 @@ const Home = () => {
     getQuestions();
     getAnswersCount();
   }, []);
+
+  useEffect(() => {
+    socket?.on("questionCreated", async () => {
+      await getQuestions();
+    });
+  }, [socket]);
 
   return (
     <section className="home">

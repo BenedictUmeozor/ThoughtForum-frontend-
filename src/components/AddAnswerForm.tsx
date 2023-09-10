@@ -4,13 +4,15 @@ import { CircularProgress } from "@mui/material";
 import { AxiosError } from "axios";
 import { axiosAuth } from "../axios/axios";
 import { setSuccess } from "../features/SnackbarSlice";
-import { useAppDispatch } from "../hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { useSocket } from "../contexts/socket";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
   question_id: string;
   onFetch: Function;
   closeModal: Function;
+  user_id: string;
 };
 
 interface FormData {
@@ -23,11 +25,15 @@ const AddAnswerForm = ({
   question_id,
   onFetch,
   closeModal,
+  user_id,
 }: PropTypes) => {
   const [body, setBody] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const socket = useSocket();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+  const { _id } = useAppSelector((state) => state.auth);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -49,6 +55,10 @@ const AddAnswerForm = ({
             message: `Answer created successfully`,
           })
         );
+        socket?.emit("answerCreated");
+        if (_id !== user_id) {
+          socket?.emit("answer", { _id: user_id, name: user.name });
+        }
       })
       .catch((error) => {
         const axiosError = error as AxiosError;
