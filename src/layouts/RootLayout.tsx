@@ -22,7 +22,6 @@ import {
   setWarning,
 } from "../features/SnackbarSlice";
 import { useSocket } from "../contexts/socket";
-import "react-toastify/dist/ReactToastify.css";
 import { setUser } from "../features/UserSlice";
 
 const RootLayout = () => {
