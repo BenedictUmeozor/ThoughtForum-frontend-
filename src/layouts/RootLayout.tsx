@@ -152,7 +152,7 @@ const RootLayout = () => {
       );
     });
 
-    socket?.on("answer", (user) => {
+    socket?.on("follow", (user) => {
       dispatch(
         setInfo({ show: true, message: `${user} started following you` })
       );
