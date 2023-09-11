@@ -9,9 +9,10 @@ import { CircularProgress } from "@mui/material";
 
 type Props = {
   id: string | undefined;
+  category: string | undefined;
 };
 
-const RelatedQuestions = ({ id }: Props) => {
+const RelatedQuestions = ({ id, category }: Props) => {
   const [questions, setQuestions] = useState<RelatedQuestion[] | null>(null);
   const [fetchError, setFetchError] = useState(false);
   const dispatch = useAppDispatch();
@@ -20,9 +21,10 @@ const RelatedQuestions = ({ id }: Props) => {
     setFetchError(false);
     try {
       const { data } = await axiosInstance.get(
-        "/questions/related-questions/" + id
+        "/questions/related-questions/" + category
       );
-      setQuestions(data);
+      const filtered = (data as RelatedQuestion[]).filter((q) => q._id !== id);
+      setQuestions(filtered);
     } catch (error) {
       console.log(error);
       setFetchError(true);

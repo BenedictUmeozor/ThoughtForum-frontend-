@@ -274,7 +274,10 @@ const QuestionPage = () => {
         </div>
         <div className="right-col">
           <div className="sidebar">
-            <RelatedQuestions id={question?.category._id} />
+            <RelatedQuestions
+              id={question?._id}
+              category={question?.category._id}
+            />
             <TopMembers />
           </div>
         </div>
