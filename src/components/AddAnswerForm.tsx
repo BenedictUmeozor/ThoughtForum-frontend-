@@ -49,6 +49,8 @@ const AddAnswerForm = ({
       .then(() => {
         closeModal();
         onFetch();
+      })
+      .then(() => {
         dispatch(
           setSuccess({
             show: true,
