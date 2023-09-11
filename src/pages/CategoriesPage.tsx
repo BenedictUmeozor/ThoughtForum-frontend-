@@ -8,6 +8,7 @@ import { axiosInstance } from "../axios/axios";
 import { CategoryInterface, QuestionInterface } from "../helpers/interfaces";
 import { CircularProgress } from "@mui/material";
 import { setError } from "../features/SnackbarSlice";
+import AddQuestionForm from "../components/AddQuestionForm";
 
 const CategoriesPage = () => {
   const categories: CategoryInterface[] = useAppSelector(
@@ -20,6 +21,7 @@ const CategoriesPage = () => {
   const [questions, setQuestions] = useState<QuestionInterface[] | null>(null);
   const [fetchError, setFetchError] = useState(false);
   const { id } = useParams();
+  const [show, setShow] = useState(false);
 
   const getQuestions = async (id: string) => {
     setFetchError(false);
@@ -32,6 +34,12 @@ const CategoriesPage = () => {
     }
   };
 
+  const onFetch = async () => {
+    if (id) {
+      await getQuestions(id);
+    }
+  };
+
   useEffect(() => {
     if (id) {
       setMainCategory(categories.find((c) => c._id === id)!);
@@ -41,6 +49,13 @@ const CategoriesPage = () => {
 
   return (
     <section className="categories">
+      {show && (
+        <AddQuestionForm
+          onClose={() => setShow(false)}
+          closeModal={() => setShow(false)}
+          onFetch={onFetch}
+        />
+      )}
       <div className="container">
         <div className="left-col">
           <div className="category-page">
@@ -52,6 +67,7 @@ const CategoriesPage = () => {
           </div>
           <div className="active-category">
             <p>{mainCategory?.title}</p>
+            <button onClick={() => setShow(true)}>Ask a question</button>
           </div>
           {!fetchError && (
             <div>
