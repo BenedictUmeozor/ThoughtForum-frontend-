@@ -49,7 +49,11 @@ const RootLayout = () => {
       dispatch(setCredentials(data));
     } catch (error) {
       console.log(error);
-      dispatch(setError({ show: true, message: "Server error" }));
+      dispatch(deleteCredentials());
+      dispatch(
+        setInfo({ show: true, message: "Session expired, login again" })
+      );
+      navigate("/login");
     }
   };
 
