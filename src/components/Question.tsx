@@ -16,6 +16,7 @@ import { axiosAuth } from "../axios/axios";
 import { QuestionInterface } from "../helpers/interfaces";
 import { setSuccess, setWarning } from "../features/SnackbarSlice";
 import { useSocket } from "../contexts/socket";
+import LikesModal from "./LikesModal";
 
 type QuestionProps = {
   question: QuestionInterface;
@@ -27,6 +28,7 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
@@ -89,6 +91,14 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
           onClose={() => setShowForm(false)}
           closeModal={() => setShowForm(false)}
           question={question}
+        />
+      )}
+      {showModal && (
+        <LikesModal
+          title="questions"
+          id={question._id}
+          closeModal={() => setShowModal(false)}
+          onClose={() => setShowModal(false)}
         />
       )}
       <div className="question-header">
@@ -158,7 +168,12 @@ const Question = ({ question, onFetch, onLike }: QuestionProps) => {
                 fill={_id && question.likes.includes(_id) ? "crimson" : "none"}
               />
             </button>
-            <span>{question.likes.length}</span>
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowModal(true)}
+            >
+              {question.likes.length}
+            </span>
           </div>
           <Link to={"/question/" + question._id} className="answers action">
             <AnswerIcon className="icon answer-icon" />

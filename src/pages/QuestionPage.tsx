@@ -14,9 +14,11 @@ import { AnswerInterface, QuestionInterface } from "../helpers/interfaces";
 import { setError, setSuccess, setWarning } from "../features/SnackbarSlice";
 import RelatedQuestions from "../components/RelatedQuestions";
 import { useSocket } from "../contexts/socket";
+import LikesModal from "../components/LikesModal";
 
 const QuestionPage = () => {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [question, setQuestion] = useState<QuestionInterface | null>(null);
   const [answers, setAnswers] = useState<AnswerInterface[] | null>(null);
   const [getQuestionsError, setGetQuestionsError] = useState(false);
@@ -122,6 +124,14 @@ const QuestionPage = () => {
           onFetch={getAnswers}
         />
       )}
+      {showModal && (
+        <LikesModal
+          closeModal={() => setShowModal(false)}
+          id={question!._id}
+          onClose={() => setShowModal(false)}
+          title="questions"
+        />
+      )}
       <div className="container">
         <div className="left-col">
           {getQuestionsError && (
@@ -192,17 +202,25 @@ const QuestionPage = () => {
                   </div>
                   <div className="footer">
                     <div className="actions">
-                      <div
-                        className={`likes ${likeLoading && "pointer-events"}`}
-                        onClick={likeQuestion}
-                      >
-                        <LikeIcon
-                          className="icon"
-                          fill={
-                            question.likes.includes(_id) ? "crimson" : "none"
-                          }
-                        />
-                        <span>{question.likes.length}</span>
+                      <div className={`likes`}>
+                        <div
+                          className={` ${likeLoading && "pointer-events"}`}
+                          onClick={likeQuestion}
+                        >
+                          {" "}
+                          <LikeIcon
+                            className="icon"
+                            fill={
+                              question.likes.includes(_id) ? "crimson" : "none"
+                            }
+                          />
+                        </div>
+                        <span
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setShowModal(true)}
+                        >
+                          {question.likes.length}
+                        </span>
                       </div>
                       <div
                         className="answers"

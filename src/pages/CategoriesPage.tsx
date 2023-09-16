@@ -22,6 +22,7 @@ const CategoriesPage = () => {
   const [fetchError, setFetchError] = useState(false);
   const { id } = useParams();
   const [show, setShow] = useState(false);
+  const { _id } = useAppSelector((state) => state.auth);
 
   const getQuestions = async (id: string) => {
     setFetchError(false);
@@ -67,7 +68,9 @@ const CategoriesPage = () => {
           </div>
           <div className="active-category">
             <p>{mainCategory?.title}</p>
-            <button onClick={() => setShow(true)}>Ask a question</button>
+            {_id && (
+              <button onClick={() => setShow(true)}>Ask a question</button>
+            )}
           </div>
           {!fetchError && (
             <div>

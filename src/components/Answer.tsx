@@ -14,6 +14,7 @@ import { axiosAuth } from "../axios/axios";
 import { setSuccess, setWarning } from "../features/SnackbarSlice";
 import { formatRFC7231 } from "date-fns";
 import { useSocket } from "../contexts/socket";
+import LikesModal from "./LikesModal";
 
 type PropTypes = {
   answer: AnswerInterface;
@@ -22,6 +23,7 @@ type PropTypes = {
 
 const Answer = ({ answer, onFetch }: PropTypes) => {
   const [showActions, setShowActions] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const { _id } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
@@ -58,7 +60,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
             message: `Answer deleted successfully`,
           })
         );
-        socket?.emit("answerCreated")
+        socket?.emit("answerCreated");
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
@@ -74,6 +76,7 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
           closeModal={() => setShowForm(false)}
         />
       )}
+      {showModal && <LikesModal title="answers" closeModal={() => setShowModal(false)} onClose={() => setShowModal(false)} id={answer._id}  />}
       <div className="answer-header">
         <Link to={"/profile/" + answer.user._id} className="user">
           <Avatar name={answer.user?.name} />
@@ -114,7 +117,9 @@ const Answer = ({ answer, onFetch }: PropTypes) => {
             fill={_id && answer.likes.includes(_id) ? "crimson" : "none"}
           />
         </div>
-        <span>{answer.likes.length}</span>
+        <span style={{ cursor: "pointer" }} onClick={() => setShowModal(true)}>
+          {answer.likes.length}
+        </span>
       </div>
     </div>
   );
