@@ -43,7 +43,7 @@ const RootLayout = () => {
 
   const refresh = async (refreshToken: string) => {
     try {
-      const { data } = await axiosAuth.post("/auth/refresh", {
+      const { data } = await axiosInstance.post("/auth/refresh", {
         token: refreshToken,
       });
       dispatch(setCredentials(data));
