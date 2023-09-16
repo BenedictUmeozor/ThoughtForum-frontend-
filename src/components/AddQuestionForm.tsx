@@ -6,6 +6,8 @@ import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
 import { setSuccess } from "../features/SnackbarSlice";
 import { useSocket } from "../contexts/socket";
+import { motion } from "framer-motion";
+import { modalVariants } from "../variants";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -83,7 +85,12 @@ const AddQuestionForm = ({ onClose, closeModal, onFetch }: PropTypes) => {
 
   return (
     <div className="modal">
-      <div className="modal-content question-modal">
+      <motion.div
+        className="modal-content question-modal"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="close">
           <div onClick={onClose}>
             <XIcon className="icon" />
@@ -127,7 +134,7 @@ const AddQuestionForm = ({ onClose, closeModal, onFetch }: PropTypes) => {
             {loading ? <CircularProgress size={"1rem"} /> : "Create question"}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

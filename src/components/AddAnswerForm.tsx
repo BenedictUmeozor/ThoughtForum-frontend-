@@ -6,6 +6,8 @@ import { axiosAuth } from "../axios/axios";
 import { setSuccess } from "../features/SnackbarSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { useSocket } from "../contexts/socket";
+import { modalVariants } from "../variants";
+import { motion } from "framer-motion";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -76,7 +78,12 @@ const AddAnswerForm = ({
 
   return (
     <div className="modal">
-      <div className="modal-content profile">
+      <motion.div
+        className="modal-content profile"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="close">
           <div onClick={onClose}>
             <XIcon className="icon" />
@@ -98,7 +105,7 @@ const AddAnswerForm = ({
             {loading ? <CircularProgress size={"1rem"} /> : "Add Answer"}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

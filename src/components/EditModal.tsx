@@ -6,6 +6,8 @@ import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
 import { setSuccess } from "../features/SnackbarSlice";
 import { useAppDispatch } from "../hooks/hooks";
+import { motion } from "framer-motion";
+import { modalVariants } from "../variants";
 
 type PropTypes = {
   onClose?: (event: MouseEvent) => void;
@@ -55,7 +57,12 @@ const EditModal = ({ onClose, closeModal, onFetch, user }: PropTypes) => {
 
   return (
     <div className="modal">
-      <div className="modal-content profile">
+      <motion.div
+        className="modal-content profile"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="close">
           <div onClick={onClose}>
             <XIcon className="icon" />
@@ -98,7 +105,7 @@ const EditModal = ({ onClose, closeModal, onFetch, user }: PropTypes) => {
             {loading ? <CircularProgress size={"1rem"} /> : "Update"}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

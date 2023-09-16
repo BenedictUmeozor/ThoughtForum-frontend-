@@ -7,6 +7,8 @@ import { axiosAuth } from "../axios/axios";
 import { AxiosError } from "axios";
 import { setSuccess } from "../features/SnackbarSlice";
 import { useSocket } from "../contexts/socket";
+import { motion } from "framer-motion";
+import { modalVariants } from "../variants";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -28,7 +30,7 @@ const EditQuestionForm = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
-  const socket = useSocket()
+  const socket = useSocket();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +53,7 @@ const EditQuestionForm = ({
             message: `Question updated successfully`,
           })
         );
-        socket?.emit("questionCreated")
+        socket?.emit("questionCreated");
       })
       .catch((error) => {
         const axiosError = error as AxiosError;
@@ -67,7 +69,12 @@ const EditQuestionForm = ({
 
   return (
     <div className="modal">
-      <div className="modal-content question-modal">
+      <motion.div
+        className="modal-content question-modal"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="close">
           <div onClick={onClose}>
             <XIcon className="icon" />
@@ -110,7 +117,7 @@ const EditQuestionForm = ({
             {loading ? <CircularProgress size={"1rem"} /> : "Update question"}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -7,6 +7,8 @@ import { AxiosError } from "axios";
 import { CircularProgress } from "@mui/material";
 import { setSuccess } from "../features/SnackbarSlice";
 import { useAppDispatch } from "../hooks/hooks";
+import { motion } from "framer-motion";
+import { modalVariants } from "../variants";
 
 type PropTypes = {
   onClose: (event: MouseEvent) => void;
@@ -52,7 +54,12 @@ const EditAnswer = ({ onClose, answer, onFetch, closeModal }: PropTypes) => {
 
   return (
     <div className="modal">
-      <div className="modal-content profile">
+      <motion.div
+        className="modal-content profile"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="close">
           <div onClick={onClose}>
             <XIcon className="icon" />
@@ -74,7 +81,7 @@ const EditAnswer = ({ onClose, answer, onFetch, closeModal }: PropTypes) => {
             {loading ? <CircularProgress size={"1rem"} /> : "Update"}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

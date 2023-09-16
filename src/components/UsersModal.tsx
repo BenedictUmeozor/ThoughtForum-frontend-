@@ -4,6 +4,8 @@ import FollowUser from "./FollowUser";
 import { FollowUser as userInterface } from "../helpers/interfaces";
 import { axiosInstance } from "../axios/axios";
 import { CircularProgress } from "@mui/material";
+import { motion } from "framer-motion";
+import { modalVariants } from "../variants";
 
 type PropTypes = {
   title?: string;
@@ -30,7 +32,12 @@ const UsersModal = ({ title, onClose, id, closeModal }: PropTypes) => {
 
   return (
     <div className="modal">
-      <div className="modal-content users">
+      <motion.div
+        className="modal-content users"
+        variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+      >
         <div className="close">
           <div onClick={onClose}>
             <XIcon className="icon" />
@@ -61,7 +68,7 @@ const UsersModal = ({ title, onClose, id, closeModal }: PropTypes) => {
             <CircularProgress size={"1rem"} />
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };
