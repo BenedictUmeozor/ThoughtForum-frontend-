@@ -1,5 +1,5 @@
 import { MenuIcon, SearchIcon, XIcon } from "../assets/icons";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAppSelector } from "../hooks/hooks";
 
@@ -8,6 +8,7 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { refreshToken } = useAppSelector((state) => state.auth);
   const categories = useAppSelector((state) => state.categories);
+  const navigate = useNavigate();
 
   return (
     <header>
@@ -85,6 +86,11 @@ const Header = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search question..."
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && searchTerm) {
+                  navigate("/search?search=" + searchTerm);
+                }
+              }}
             />
             <Link to={`/search${searchTerm ? `?search=${searchTerm}` : ""}`}>
               <SearchIcon className="icon" />
