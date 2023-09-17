@@ -46,10 +46,13 @@ const SearchPage = () => {
       return;
     }
     setSearchResult(null);
-    const searched = questions.filter((question) =>
+    const titleSearch = questions.filter((question) =>
       question.title.toLowerCase().includes(searchTerm.toLowerCase().trim())
     );
-    setSearchResult(searched);
+    const bodySearch = questions.filter((question) =>
+      question.title.toLowerCase().includes(searchTerm.toLowerCase().trim())
+    );
+    setSearchResult([...titleSearch, ...bodySearch]);
   };
 
   useEffect(() => {
