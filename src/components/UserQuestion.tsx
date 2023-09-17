@@ -22,7 +22,7 @@ const UserQuestion = ({ question, onFetch }: PropTypes) => {
   const deleteQuestion = async () => {
     setLoading(true);
     try {
-      await axiosAuth.delete("/questions/" + question._id);
+      await axiosAuth.delete("/questions/profile/" + question._id);
       onFetch();
       dispatch(
         setSuccess({ show: true, message: "Question deleted successfully" })

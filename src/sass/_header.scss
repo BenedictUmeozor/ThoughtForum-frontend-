@@ -23,17 +23,78 @@ header {
   .container {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     column-gap: 1.5rem;
     max-width: 1200px;
 
-    @media (max-width: 768px) {
-      justify-content: space-between;
+    .left {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      column-gap: 1.5rem;
+
+      @media (min-width: 768px) {
+        flex: 1.3;
+      }
+
+      @media (max-width: 768px) {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .search-icon {
+        display: none;
+
+        @media (max-width: 768px) {
+          display: block;
+          color: #fefefe;
+        }
+
+        .icon {
+          width: 2rem;
+        }
+      }
+    }
+
+    .right {
+      flex: 0.7;
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+
+      .search-bar {
+        position: relative;
+        height: 45px;
+
+        .icon {
+          position: absolute;
+          top: 50%;
+          right: 2%;
+          transform: translateY(-50%);
+          color: #555;
+        }
+
+        input {
+          appearance: none;
+          width: 100%;
+          height: 100%;
+          border: 1px solid transparent;
+          border-radius: 3px;
+          padding: 0 0.3rem;
+          font-family: $font-poppins;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+          }
+        }
+      }
     }
 
     .logo {
       h1 {
-        font-size: 1.35rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: #fefefe;
         font-family: $font-poppins;

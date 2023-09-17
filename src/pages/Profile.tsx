@@ -54,7 +54,7 @@ const Profile = () => {
       });
 
       const questions = await Promise.all(questionPromises);
-      setQuestions(questions);
+      setQuestions(questions.reverse());
 
       return questions;
     }

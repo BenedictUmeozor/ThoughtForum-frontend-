@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import store from "./store/store.ts";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import { SocketProvider } from "./contexts/socket.tsx";
+
 const Signup = lazy(() => import("./pages/Signup"));
 const Signin = lazy(() => import("./pages/Signin"));
 const Profile = lazy(() => import("./pages/Profile"));
@@ -23,6 +24,7 @@ const Construction = lazy(() => import("./pages/Construction"));
 const QuestionPage = lazy(() => import("./pages/QuestionPage"));
 const CategoriesPage = lazy(() => import("./pages/CategoriesPage"));
 const Logout = lazy(() => import("./pages/Logout"));
+const SearchPage = lazy(() => import("./pages/SearchPage"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,6 +45,7 @@ const router = createBrowserRouter(
       <Route path="categories/:id" element={<CategoriesPage />} />
       <Route path="logout" element={<Logout />} />
       <Route path="error" element={<ErrorPage />} />
+      <Route path="search" element={<SearchPage />} />
       <Route path="*" element={<Construction />} />
     </Route>
   )
