@@ -33,7 +33,7 @@
           font-size: 0.98rem;
 
           span {
-            font-weight: 450;
+            font-weight: 500;
             font-family: $font-poppins;
             color: $secondary-color;
           }
@@ -64,13 +64,13 @@
               }
 
               p {
-                padding: 0.6rem;
-                font-size: 0.95rem;
+                padding: 0.5rem;
+                font-size: 0.9rem;
                 cursor: pointer;
                 transition: all 0.2s ease;
                 display: flex;
                 align-items: center;
-                column-gap: 0.3rem;
+                column-gap: 0.25rem;
 
                 .icon {
                   width: 1.2rem;
@@ -87,8 +87,8 @@
               }
 
               p {
-                padding: 0.6rem;
-                font-size: 0.95rem;
+                padding: 0.5rem;
+                font-size: 0.9rem;
                 cursor: pointer;
                 transition: all 0.2s ease;
                 display: flex;
@@ -309,15 +309,16 @@
         display: flex;
         align-items: center;
         column-gap: 0.25rem;
-        margin-top: 0.3rem;
+        margin-top: 0.25rem;
+        color: #777;
 
         .icon {
           width: 1.3rem;
-          color: $primary-color;
+          color: #777;
         }
 
         span {
-          font-size: 0.95rem;
+          font-size: 0.9rem;
         }
       }
     }
@@ -327,7 +328,7 @@
 .profile-question {
   margin-bottom: 0.8rem;
   padding: 1rem;
-  background-color: #fcfcfc;
+  background-color: #eee;
   border-radius: 0.3rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 

@@ -14,7 +14,7 @@ interface UserInterface {
 
 type PropTypes = {
   user: UserInterface;
-  onFetch: Function;
+  onFetch: () => void;
 };
 
 const User = ({ user, onFetch }: PropTypes) => {
