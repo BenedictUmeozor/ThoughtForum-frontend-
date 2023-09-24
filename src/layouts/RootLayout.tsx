@@ -2,7 +2,6 @@ import { Suspense, useEffect } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { Outlet, useNavigate } from "react-router-dom";
-import Loader from "../components/Loader";
 import { axiosAuth, axiosInstance } from "../axios/axios";
 import { AxiosError } from "axios";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
@@ -23,6 +22,7 @@ import {
 } from "../features/SnackbarSlice";
 import { useSocket } from "../contexts/socket";
 import { setUser } from "../features/UserSlice";
+import Spinner from "../components/Spinner";
 
 const RootLayout = () => {
   const dispatch = useAppDispatch();
@@ -206,7 +206,7 @@ const RootLayout = () => {
       </div>
       <section>
         <div>
-          <Suspense fallback={<Loader />}>
+          <Suspense fallback={<Spinner />}>
             <Outlet />
           </Suspense>
           <div className="container">

@@ -57,7 +57,17 @@ const Footer = () => {
         </div>
       </div>
       <div className="copyright container">
-        <p>All rights reserved | Benedict &copy; 2023</p>
+        <p>
+          &copy; All rights reserved |{" "}
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://benedictumeozor.vercel.app"
+          >
+            Benedict
+          </a>{" "}
+          2023
+        </p>
       </div>
     </footer>
   );

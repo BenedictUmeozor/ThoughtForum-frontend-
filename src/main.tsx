@@ -9,11 +9,11 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/index.tsx";
-import Loader from "./components/Loader.tsx";
 import { Provider } from "react-redux";
 import store from "./store/store.ts";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import { SocketProvider } from "./contexts/socket.tsx";
+import Spinner from "./components/Spinner.tsx";
 
 const Signup = lazy(() => import("./pages/Signup"));
 const Signin = lazy(() => import("./pages/Signin"));
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
     <Route
       path="/"
       element={
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Spinner />}>
           <RootLayout />
         </Suspense>
       }

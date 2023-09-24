@@ -46,7 +46,7 @@ const CategoriesPage = () => {
       setMainCategory(categories.find((c) => c._id === id)!);
       getQuestions(id);
     }
-  }, [id]);
+  }, [id, categories]);
 
   return (
     <section className="categories">
