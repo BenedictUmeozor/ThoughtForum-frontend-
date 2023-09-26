@@ -41,7 +41,11 @@ const FollowUser = ({ user, onFetch, title, onClose }: Props) => {
       })
       .catch((error) => {
         console.log(error);
-        dispatch(setError({ show: true, message: "Something went wrong" }));
+        if (_id) {
+          dispatch(setError({ show: true, message: "Something went wrong" }));
+        } else {
+          dispatch(setError({ show: true, message: "You need to be logged in" }));
+        }
       })
       .finally(() => setLoading(false));
   };
